@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='themmon.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Questions</h1>
+        <form id="question-form">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+            <label for="code">Course Code:</label>
+            <input type="text" id="code" name="code" required>
+            <label for="quantity">Number of Questions:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+            <button type="submit">Start Adding Questions</button>
+        </form>
+        <form id="question-container" style="display: none;">
+            <h2>Add Questions</h2>
+            <div id="add-question-form">
+                <!-- Question Inputs will be dynamically added here -->
+                
+            </div>
+            <button id='submitbutton' type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='main1.js') }}"></script>
+</body>
+</html>

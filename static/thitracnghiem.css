@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#question-container {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.option-btn {
+    display: block;
+    margin-bottom: 10px; /* Khoảng cách giữa các nút */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.option-btn:hover {
+    background-color: lightgray;
+}
+
+.option-btn.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+
+.correct {
+    background-color: #28a745;
+    color: white;
+}
+
+.incorrect {
+    background-color: #dc3545;
+    color: white;
+}
+.submit-btn{
+    background-color: beige;
+    position: absolute;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+}
