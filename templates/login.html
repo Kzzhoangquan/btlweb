@@ -8,6 +8,15 @@
     
 </head>
 <body>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      {% for m in messages %}
+      <div class="fade-out success-message">
+          <P>{{m}}</P>
+      </div>   
+  {% endfor %} 
+{% endif %} 
+{% endwith %}  
   <div class="login-container">
     <h2>Login</h2>
     <form action="{{url_for('login')}}" method="POST">
@@ -20,7 +29,7 @@
         <input type="password" id="password" name="password" required>
       </div>
       <div class="dangky1">
-        <a class="dangky" href="">ĐĂNG KÝ NGAY</a>
+        <a class="dangky" href="/dangky">ĐĂNG KÝ NGAY</a>
       </div>
       <button type="submit">Login</button>
     </form>

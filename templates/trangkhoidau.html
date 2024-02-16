@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
+    <title>NHÓM 4</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='trangkhoidau.css') }}">
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for m in messages %}
+            <div class="fade-out success-message">
+                <P>{{m}}</P>
+            </div>   
+        {% endfor %} 
+    {% endif %} 
+    {% endwith %}  
     <nav class="navbar">
         <div class="navbar-left">
-            <a href="#home">Trang chủ</a>
+            <h4 style="color: azure;">NHÓM 4</h4>
         </div>
         <div class="navbar-right">
 
@@ -19,7 +28,32 @@
     </nav>
 
     <div class="content">
-        <!-- Nội dung trang web -->
+        <div class="slider">
+            <div class="list">
+                <div class="item">
+                    <img src="{{ url_for('static', filename='images/anh1.jpg') }}" alt="">
+                </div>
+                <div class="item">
+                    <img src="{{ url_for('static', filename='images/anh2.jpg') }}" alt="">
+                </div>
+                <div class="item">
+                    <img src="{{ url_for('static', filename='images/anh3.jpg') }}" alt="">
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="prev"><</button>
+                <button id="next">></button>
+            </div>
+            <ul class="dots">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
     </div>
+    <script src="{{ url_for('static', filename='trangkhoidau.js') }}"></script>
 </body>
 </html>

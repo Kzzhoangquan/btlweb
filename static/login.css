@@ -94,4 +94,29 @@
     background-color: #0056b3;
   }
   
-  
+  .success-message {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 9999;
+}
+.fade-out {
+    opacity: 1;
+    transition: opacity 3s;
+}
+
+.fade-out.hidden {
+    opacity: 0;
+}
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.fade-out {
+    animation: fadeOut 3s forwards;
+}

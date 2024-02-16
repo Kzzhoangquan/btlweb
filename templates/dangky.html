@@ -8,6 +8,15 @@
     
 </head>
 <body>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      {% for m in messages %}
+      <div class="fade-out success-message">
+          <P>{{m}}</P>
+      </div>   
+  {% endfor %} 
+{% endif %} 
+{% endwith %}
   <div class="login-container">
     <h2>ĐĂNG KÝ</h2>
     <form action="" method="POST">
