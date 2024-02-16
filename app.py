@@ -122,9 +122,9 @@ def save_data():
             conn.commit()
         # Sau đó, trả về phản hồi cho trang web
             return redirect(url_for("trangchu"))
-    else:
-        flash("Bạn hãy đăng nhập tài khoản",category="info")
-        return redirect(url_for("index"))
+    # else:
+    #     flash("Bạn hãy đăng nhập tài khoản",category="info")
+    #     return redirect(url_for("index"))
 
 #xử lý đăng ký tại đây
 def check1(a):
