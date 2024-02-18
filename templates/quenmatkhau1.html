@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên mật khẩu</title>
+    <link rel="stylesheet"  href="{{ url_for('static', filename='quenmatkhau1.css') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for m in messages %}
+        <div class="fade-out success-message">
+            <P>{{m}}</P>
+        </div>   
+    {% endfor %} 
+  {% endif %} 
+  {% endwith %}  
+    <form action="" method="POST">
+        <label for="email">Email của bạn:</label><br>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Gửi mã xác nhận</button>
+    </form>
+</body>
+</html>

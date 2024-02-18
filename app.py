@@ -2,6 +2,9 @@ from flask import Flask,redirect,url_for,render_template,request,session,flash,j
 from os import path
 import pyodbc
 import json
+import random
+import smtplib
+from email.mime.text import MIMEText
 app=Flask(__name__)
 app.config["SECRET_KEY"]="quanhoangduong"
 server = 'LAPTOP-FF387IJ3\HOANGQUAN'
@@ -154,6 +157,68 @@ def dangky():
 def log_out():
     session.pop("user", None)
     return redirect(url_for("index"))
+
+# lấy lại mật khẩu
+
+# hàm để gửi email
+def send_email(email, verification_code):
+    smtp_server = 'smtp.googlemail.com'
+    smtp_port = 587
+    sender_email = 'sieugazl02@gmail.com'
+    sender_password = 'chyr ktgf sbmt uhcg'
+
+    message = MIMEText(f'Mã xác nhận của bạn là: {verification_code}')
+    message['Subject'] = 'WEB HỌC TẬP NHÓM 4'
+    message['From'] = sender_email
+    message['To'] = email
+
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, [email], message.as_string())
+# nhập email để lấy lại mật khẩu
+@app.route('/quenmatkhau1', methods=["POST","GET"])
+def verify_email():
+    if request.method=="POST":
+        email = request.form['email']
+        session['email'] = email
+        # tạo mã xác nhận
+        verification_code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+        session['verification_code'] = verification_code
+
+        # gửi mã xác nhận cho email
+        send_email(email, verification_code)
+        return redirect(url_for("confirm_code"))
+    else:
+        return render_template('quenmatkhau1.html')
+
+@app.route('/quenmatkhau2', methods=['POST','GET'])
+def confirm_code():
+    if request.method=="POST":
+        entered_code = request.form['code']
+        if entered_code == session.get('verification_code'):
+            return redirect(url_for("newpassword")) 
+        else:
+            flash("Mã xác nhận của bạn không đúng",category="info")
+            return redirect(url_for("verify_email")) 
+    else:
+        return  render_template('quenmatkhau2.html')
+
+@app.route('/quenmatkhau3', methods=['POST','GET'])
+def newpassword():
+    if request.method=="POST":
+        mk1 = request.form['password1']
+        mk2 = request.form['password2']
+        if mk1==mk2:
+            #cap nhat mk cho sql
+            flash("Lấy lại mật khẩu thành công",category="info")
+            return redirect(url_for("index"))
+        else:
+            flash("Mật khẩu nhập lại không trùng khớp",category="info")
+            return redirect(url_for("newpassword"))
+    else:
+        return render_template('quenmatkhau3.html')
+
 
 
 
