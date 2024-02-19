@@ -221,9 +221,9 @@ def newpassword():
 
 
 
-
-
-
+@app.route('/webdesign')
+def webdesign():
+    return render_template('web_design.html')
 
 if __name__ == "__main__":
     
