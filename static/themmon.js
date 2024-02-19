@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const questionContainer = document.getElementById('question-container');
     const addQuestionForm = document.getElementById('add-question-form');
     const submitQuestionsBtn=document.getElementById('submitbutton');
+    const backButton = document.getElementById('back-button');
     questionForm.addEventListener('submit', function(event) {
         event.preventDefault();
         subject = document.getElementById('subject').value; // Lưu giá trị vào biến ngoài
@@ -63,20 +64,14 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             data.questions.push(question);
         }
-        // console.log(data);
-        // submitQuestionsBtn.addEventListener('click', function(event) {
-        //     event.preventDefault();
-        //     // Thực hiện các thao tác cần thiết khi người dùng nhấn nút "Submit Questions"
-        //     // Ví dụ: Gửi dữ liệu đến máy chủ hoặc hiển thị thông báo "Submit thành công"
-        //     const successMessage = document.createElement('div');
-        //     successMessage.textContent = 'Submit thành công';
-        //     successMessage.classList.add('success-message');
-        //     document.body.appendChild(successMessage);
-        //     setTimeout(() => {
-        //         successMessage.remove();
-        //     }, 3000); // Xóa thông báo sau 3 giây
-        // });
+        
         sendDataToFlask(data);
+    
+    });
+    backButton.style.display = 'block';
+    backButton.addEventListener('click', function() {
+        // Điều hướng trang về trang chủ
+        window.location.href = '/trangchu'; // Thay đổi '/'' thành URL của trang chủ của bạn
     });
     function sendDataToFlask(data) {
         fetch('/save-data', {

@@ -124,10 +124,11 @@ def save_data():
                     (data.get('subject_code'), data.get('subject_name'), question_text, option1, option2, option3, option4, correct_answer))
             conn.commit()
         # Sau đó, trả về phản hồi cho trang web
-            return redirect(url_for("trangchu"))
-    # else:
-    #     flash("Bạn hãy đăng nhập tài khoản",category="info")
-    #     return redirect(url_for("index"))
+            response = {'message': 'Data received successfully', 'data': data}
+            return jsonify(response)
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 #xử lý đăng ký tại đây
 def check1(a):
@@ -211,6 +212,8 @@ def newpassword():
         mk2 = request.form['password2']
         if mk1==mk2:
             #cap nhat mk cho sql
+            cursor.execute("UPDATE NGUOIDUNG SET pass=(?) WHERE username IN (?)",(mk1),(session['email']))
+            conn.commit()
             flash("Lấy lại mật khẩu thành công",category="info")
             return redirect(url_for("index"))
         else:
