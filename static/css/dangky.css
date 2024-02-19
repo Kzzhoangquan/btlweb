@@ -1,31 +1,4 @@
-.navbar {
-    background-color: #333;
-    overflow: hidden;
-    display: inline-block;
-  }
-  
-  .nav-links {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: right;
-  }
-  
-  .nav-links li {
-    display: inline;
-  }
-  
-  .nav-links li a {
-    display: block;
-    padding: 14px 16px;
-    text-decoration: none;
-    color: white;
-  }
-  
-  .nav-links li a:hover {
-    background-color: #111;
-  }
-   
+
   
   /*form dang nhap*/
   body {
@@ -39,84 +12,106 @@
     background-color: #f0f0f0;
   }
   
-  .login-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
   
-  h2 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .input-group {
-    margin-bottom: 20px;
-    
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .input-group input {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-right: 20px;
-  }
-  .dangky1 {
-    
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  .dangky {
-    text-decoration: none;
-    text-align: center;
    
-  }
   
-  button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-  }
+  /*form dang nhap*/
+ 
   
+.login-container {
+  height: 350px;
+  width: 600px;
+  background-color:#fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   
-  button:hover {
-    background-color: #0056b3;
-  }
+}
+
+
+h2 {
+  text-align: center;
+  color: #333;
+ 
+}
+
+.input-group {
+  margin-bottom: 20px;
+  margin:0px 30px 20px 30px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color:#c8dae2;
   
-  .success-message {
-    position: fixed;
-    top: 50px;
-    right: 20px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 9999;
+}
+
+.dk1{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 0px 32px;
+  margin-top: 50px;
+
+}
+.dangky1 {
+  
+  text-align: left;
+  margin-bottom: 12px;
+}
+.phan1 {
+  text-decoration: none;
+  font-size: 20px;
+  color: #6dea75;
+ 
+}
+
+button {
+  width: 30%;
+  height: 15%;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.success-message {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 9999;
 }
 .fade-out {
-    opacity: 1;
-    transition: opacity 3s;
+  opacity: 1;
+  transition: opacity 3s;
 }
 
 .fade-out.hidden {
-    opacity: 0;
+  opacity: 0;
 }
 @keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .fade-out {
-    animation: fadeOut 3s forwards;
+  animation: fadeOut 3s forwards;
 }

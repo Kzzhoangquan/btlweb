@@ -21,20 +21,20 @@
     <h2>Login</h2>
     <form action="{{url_for('login')}}" method="POST">
       <div class="input-group">
-        <label for="username">Username:</label>
+        <label for="username">Email:</label>
         <input type="text" id="username" name="username" required>
       </div>
       <div class="input-group">
-        <label for="password">Password:</label>
+        <label for="password">Mật khẩu:</label>
         <input type="password" id="password" name="password" required>
       </div>
-      <div class="dangky1">
-        <a class="dangky" href="/dangky">ĐĂNG KÝ NGAY</a>
-      </div>
-      <div class="dangky1">
-        <a class="dangky" href="/quenmatkhau1">QUÊN MẬT KHẨU</a>
-      </div>
-      <button type="submit">Login</button>
+      <div class="dk1">
+        <div class="dangky1">
+            <a class="phan1" href="/quenmatkhau1">Quên mật khẩu</a><br>
+            <a class="phan1" href="/dangky">Đăng ký ngay</a>  
+        </div>
+        <button  type="submit">Đăng nhập</button>
+    </div>
     </form>
   </div>
 </body>

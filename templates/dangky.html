@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Đăng ký</title>
  <link rel="stylesheet"  href="{{ url_for('static', filename='dangky.css') }}">
     
 </head>
@@ -21,15 +21,20 @@
     <h2>ĐĂNG KÝ</h2>
     <form action="" method="POST">
       <div class="input-group">
-        <label for="username">Username:</label>
+        <label for="username">Email:</label>
         <input type="text" id="username" name="username" required>
       </div>
       <div class="input-group">
-        <label for="password">Password:</label>
+        <label for="password">Mật khẩu:</label>
         <input type="password" id="password" name="password" required>
       </div>
       
-      <button type="submit">Đăng ký</button>
+      <div class="dk1">
+        <div class="dangky1">
+            <a class="phan1" href="/login">Đăng nhập ngay</a>
+        </div>
+        <button  type="submit">Đăng ký</button>
+    </div>
     </form>
   </div>
 </body>

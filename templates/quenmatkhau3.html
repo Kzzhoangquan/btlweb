@@ -16,13 +16,22 @@
     {% endfor %} 
   {% endif %} 
   {% endwith %}  
-    <h2>Xác nhận thành công</h2>
-    <form action="" method="post">
-        <label for="password">Mật khẩu mới:</label>
-        <input type="password" id="password" name="password1" required>
-        <label for="password">Nhập lại mật khẩu:</label>
-        <input type="password" id="password" name="password2" required>
-        <button type="submit">Hoàn thành</button>
-    </form>
+  <div class="login-container"> 
+        <h2>Xác nhận thành công</h2>
+        <form action="" method="post">
+            <div class="input-group">
+                <label for="password">Mật khẩu mới:</label>
+                <input type="password" id="password" name="password1" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Nhập lại mật khẩu:</label>
+                <input type="password" id="password" name="password2" required>
+            </div>
+            <div class="dk1">
+                <button type="submit">Hoàn thành</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
