@@ -245,11 +245,39 @@ def newpassword():
 
 @app.route('/webdesign')
 def webdesign():
-    # if 'user' in session:
-    #     return render_template("web_design.html")
-    # else:
-    #     # return redirect(url_for('/'))
     return render_template('web_design.html')
+
+@app.route('/gioi_thieu_HTML')
+def HTML0():
+    return render_template('HTML_la_gi.html')
+
+@app.route('/HTML_la_gi')
+def HTML1():
+    return render_template('HTML_la_gi.html')
+
+@app.route('/HTML_hoat_dong_the_nao')
+def HTML2():
+    return render_template('HTML_hoat_dong_the_nao.html')
+
+@app.route('/HTML_thuat_ngu_thuong_dung')
+def HTML3():
+    return render_template('HTML_thuat_ngu_thuong_dung.html')
+
+@app.route('/hoc_ngon_ngu_nao')
+def HTML4():
+    return render_template('/hoc_ngon_ngu_nao.html')
+
+@app.route('/gioi_thieu_css1')
+def CSS1():
+    return render_template('/gioithieuCSS1.html')
+
+@app.route('/gioi_thieu_css2')
+def CSS2():
+    return render_template('/gioithieuCSS2.html')
+
+@app.route('/gioi_thieu_css3')
+def CSS3():
+    return render_template('/gioithieuCSS3.html')
     
 if __name__ == "__main__":
     
