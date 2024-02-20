@@ -30,11 +30,18 @@ def index():
 def home():
     return render_template("trangkhoidau_logged_in.html")
     
+@app.route('/admin')
+def admin():
+    return render_template("admin.html")    
+    
 #Đăng nhập và xử lý đăng nhâp
 def check(a,b):
+        
     for row in cursor.execute("select * from NGUOIDUNG"):
         if row[1] == a and row[2] == b:
-            return row[0]
+            return 1
+    if a == "admin@123.com" and b == "123456":
+        return 2
     return 0
 
 @app.route('/login', methods=["POST", "GET"] )
@@ -42,9 +49,11 @@ def login():
     if request.method=="POST":
         tendangnhap=request.form["username"]
         matkhau=request.form["password"]
-        if check(tendangnhap,matkhau)!=0:
+        if check(tendangnhap,matkhau) == 1:
             session["user"]=check(tendangnhap,matkhau)
             return redirect(url_for("home"))
+        elif check(tendangnhap, matkhau) == 2:
+            return redirect(url_for('admin'))
         else:
             flash("Tài khoản hoặc mật khẩu của bạn bị sai",category="info")
             return render_template("login.html")
@@ -236,7 +245,11 @@ def newpassword():
 
 @app.route('/webdesign')
 def webdesign():
-    return render_template("web_design.html")
+    # if 'user' in session:
+    #     return render_template("web_design.html")
+    # else:
+    #     # return redirect(url_for('/'))
+    return render_template('web_design.html')
     
 if __name__ == "__main__":
     
