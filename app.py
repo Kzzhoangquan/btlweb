@@ -1,4 +1,6 @@
-from flask import Flask,redirect,url_for,render_template,request,session,flash,jsonify
+from flask import Flask,redirect,url_for,render_template,request,session,flash,jsonify,session
+from functools import wraps
+import os
 from os import path
 import pyodbc
 import json
@@ -7,11 +9,11 @@ import smtplib
 from email.mime.text import MIMEText
 app=Flask(__name__)
 app.config["SECRET_KEY"]="quanhoangduong"
-server = 'LAPTOP-FF387IJ3\HOANGQUAN'
-database = 'Account'
-username = 'quan'
-password = '123456'
-connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password};'
+server = 'XUANDAT'
+database = 'dbweb'
+# username = 'quan'
+# password = '123456'
+connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
 conn = pyodbc.connect(connection_string)
 cursor = conn.cursor()
 
@@ -23,6 +25,11 @@ def index():
     return render_template('trangkhoidau.html')
 
 
+@app.route('/home')
+
+def home():
+    return render_template("trangkhoidau_logged_in.html")
+    
 #Đăng nhập và xử lý đăng nhâp
 def check(a,b):
     for row in cursor.execute("select * from NGUOIDUNG"):
@@ -37,7 +44,7 @@ def login():
         matkhau=request.form["password"]
         if check(tendangnhap,matkhau)!=0:
             session["user"]=check(tendangnhap,matkhau)
-            return redirect(url_for("trangchu"))
+            return redirect(url_for("home"))
         else:
             flash("Tài khoản hoặc mật khẩu của bạn bị sai",category="info")
             return render_template("login.html")
@@ -88,6 +95,7 @@ def get_data():
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
 
+
 # Thêm câu hỏi từ web vào database
 @app.route('/themmon')
 def themde():
@@ -124,11 +132,11 @@ def save_data():
                     (data.get('subject_code'), data.get('subject_name'), question_text, option1, option2, option3, option4, correct_answer))
             conn.commit()
         # Sau đó, trả về phản hồi cho trang web
-            response = {'message': 'Data received successfully', 'data': data}
-            return jsonify(response)
+            return redirect(url_for("trangchu"))
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
+
 
 #xử lý đăng ký tại đây
 def check1(a):
@@ -146,7 +154,7 @@ def dangky():
             cursor.execute("INSERT INTO NGUOIDUNG(username,pass) VALUES (?, ?)",(tendangnhap,matkhau))
             conn.commit()
             flash("Bạn đăng ký tài khoản thành công",category="info")
-            return redirect(url_for("index"))
+            return redirect(url_for("home"))
         else:
             flash("Tài khoản bạn đăng ký đã tồn tại",category="info")
             return render_template("dangky.html")
@@ -177,6 +185,8 @@ def send_email(email, verification_code):
         server.starttls()
         server.login(sender_email, sender_password)
         server.sendmail(sender_email, [email], message.as_string())
+        
+        
 # nhập email để lấy lại mật khẩu
 @app.route('/quenmatkhau1', methods=["POST","GET"])
 def verify_email():
@@ -226,8 +236,8 @@ def newpassword():
 
 @app.route('/webdesign')
 def webdesign():
-    return render_template('web_design.html')
-
+    return render_template("web_design.html")
+    
 if __name__ == "__main__":
     
     app.run(debug=True)
