@@ -322,7 +322,31 @@ def CSS3():
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
-    
+        
+@app.route('/gioi_thieu_dsa1')
+def DSA1():
+    if "user" in session:
+        return render_template('/gioithieuDSA1.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
+
+@app.route('/gioi_thieu_dsa2')
+def DSA2():
+    if "user" in session:
+        return render_template('/gioithieuDSA2.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
+
+@app.route('/gioi_thieu_JS')
+def JS1():
+    if "user" in session:
+        return render_template('/gioithieuJS.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))  
+
 if __name__ == "__main__":
     
     app.run(debug=True)
