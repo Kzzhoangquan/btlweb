@@ -410,10 +410,10 @@ strong {
   transition: all 0.3s ease;
 }
 
-.navbar-icon:hover {
+/* .navbar-icon:hover {
   background: var(--primary-color);
   color: var(--white-color);
-}
+} */
 
 .navbar-toggler {
   border: 0;
