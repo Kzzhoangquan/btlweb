@@ -87,6 +87,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 const scoreText = document.createElement('p');
                 scoreText.textContent = `Your score: ${score}/${questions.length}`;
                 resultContainer.appendChild(scoreText);
+                // resultContainer.
+                const buttonql = document.createElement('button');
+                buttonql.textContent = "Quay lại";
+                buttonql.classList.add('backhome');
+                resultContainer.appendChild(buttonql);
+                buttonql.addEventListener('click', function() {
+                    // Điều hướng trang về trang chủ
+                    window.location.href = '/tracnghiem'; // Thay đổi '/'' thành URL của trang chủ của bạn
+                });
+
+
             }
     
             displayQuestions();
