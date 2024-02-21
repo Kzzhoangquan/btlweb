@@ -1,5 +1,5 @@
 # Đầu tiên bạn hãy cài hai thư viện flask và pyodbc về nha
-# sau đó import file Account.dacpac vào SQL SERVER của bn
+# sau đó import file database.dacpac vào SQL SERVER của bn
 # vào phần app.py sửa:
     #server = 'LAPTOP-FF387IJ3\HOANGQUAN'
     #database = 'Account' /ten database sử dụng để làm việc
