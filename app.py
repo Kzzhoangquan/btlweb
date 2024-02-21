@@ -9,10 +9,10 @@ import smtplib
 from email.mime.text import MIMEText
 app=Flask(__name__)
 app.config["SECRET_KEY"]="quanhoangduong"
-server = 'XUANDAT'
-database = 'dbweb'
-# username = 'quan'
-# password = '123456'
+server = 'LAPTOP-FF387IJ3\HOANGQUAN'
+database = 'Account'
+username = 'quan'
+password = '123456'
 connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
 conn = pyodbc.connect(connection_string)
 cursor = conn.cursor()
@@ -26,22 +26,28 @@ def index():
 
 
 @app.route('/home')
-
 def home():
-    return render_template("trangkhoidau_logged_in.html")
-    
+    if "user" in session:
+        return render_template("trangkhoidau_logged_in.html")
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
+ 
 @app.route('/admin')
 def admin():
-    return render_template("admin.html")    
+    if "user" in session:
+        return render_template("admin.html")  
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
     
 #Đăng nhập và xử lý đăng nhâp
 def check(a,b):
-        
+    if a == "admin@123.com" and b == "123456":
+        return 2    
     for row in cursor.execute("select * from NGUOIDUNG"):
         if row[1] == a and row[2] == b:
             return 1
-    if a == "admin@123.com" and b == "123456":
-        return 2
     return 0
 
 @app.route('/login', methods=["POST", "GET"] )
@@ -53,7 +59,8 @@ def login():
             session["user"]=check(tendangnhap,matkhau)
             return redirect(url_for("home"))
         elif check(tendangnhap, matkhau) == 2:
-            return redirect(url_for('admin'))
+            session["user"]=check(tendangnhap,matkhau)
+            return redirect(url_for("admin"))
         else:
             flash("Tài khoản hoặc mật khẩu của bạn bị sai",category="info")
             return render_template("login.html")
@@ -105,7 +112,7 @@ def get_data():
         return redirect(url_for("index"))
 
 
-# Thêm câu hỏi từ web vào database
+# Thêm câu hỏi từ web vào database phần này danh cho admin
 @app.route('/themmon')
 def themde():
     if "user" in session:
@@ -141,7 +148,8 @@ def save_data():
                     (data.get('subject_code'), data.get('subject_name'), question_text, option1, option2, option3, option4, correct_answer))
             conn.commit()
         # Sau đó, trả về phản hồi cho trang web
-            return redirect(url_for("trangchu"))
+        response = {'message': 'Data received successfully', 'data': data}
+        return jsonify(response)
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
@@ -163,7 +171,7 @@ def dangky():
             cursor.execute("INSERT INTO NGUOIDUNG(username,pass) VALUES (?, ?)",(tendangnhap,matkhau))
             conn.commit()
             flash("Bạn đăng ký tài khoản thành công",category="info")
-            return redirect(url_for("home"))
+            return redirect(url_for("index"))
         else:
             flash("Tài khoản bạn đăng ký đã tồn tại",category="info")
             return render_template("dangky.html")
@@ -171,7 +179,7 @@ def dangky():
         return render_template("dangky.html")
     
 #code cho phan logout
-@app.route("/logout")
+@app.route('/logout')
 def log_out():
     session.pop("user", None)
     return redirect(url_for("index"))
@@ -245,39 +253,75 @@ def newpassword():
 
 @app.route('/webdesign')
 def webdesign():
-    return render_template('web_design.html')
+    if "user" in session:
+        return render_template('web_design.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/gioi_thieu_HTML')
 def HTML0():
-    return render_template('HTML_la_gi.html')
+    if "user" in session:
+        return render_template('HTML_la_gi.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/HTML_la_gi')
 def HTML1():
-    return render_template('HTML_la_gi.html')
+    if "user" in session:
+        return render_template('HTML_la_gi.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/HTML_hoat_dong_the_nao')
 def HTML2():
-    return render_template('HTML_hoat_dong_the_nao.html')
+    if "user" in session:
+        return render_template('HTML_hoat_dong_the_nao.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/HTML_thuat_ngu_thuong_dung')
 def HTML3():
-    return render_template('HTML_thuat_ngu_thuong_dung.html')
+    if "user" in session:
+        return render_template('HTML_thuat_ngu_thuong_dung.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/hoc_ngon_ngu_nao')
 def HTML4():
-    return render_template('/hoc_ngon_ngu_nao.html')
+    if "user" in session:
+        return render_template('/hoc_ngon_ngu_nao.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/gioi_thieu_css1')
 def CSS1():
-    return render_template('/gioithieuCSS1.html')
+    if "user" in session:
+        return render_template('/gioithieuCSS1.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/gioi_thieu_css2')
 def CSS2():
-    return render_template('/gioithieuCSS2.html')
+    if "user" in session:
+        return render_template('/gioithieuCSS2.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
 
 @app.route('/gioi_thieu_css3')
 def CSS3():
-    return render_template('/gioithieuCSS3.html')
+    if "user" in session:
+        return render_template('/gioithieuCSS3.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
     
 if __name__ == "__main__":
     

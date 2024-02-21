@@ -25,9 +25,25 @@
 
 -->
     </head>
-    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for m in messages %}
+            <div class="fade-out success-message">
+                <P>{{m}}</P>
+            </div>   
+        {% endfor %} 
+      {% endif %} 
+      {% endwith %} 
     <body id="top">
-
+        <!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for m in messages %}
+            <div class="fade-out success-message">
+                <P>{{m}}</P>
+            </div>   
+        {% endfor %} 
+      {% endif %} 
+      {% endwith %}   -->
         <main>
 
             <nav class="navbar navbar-expand-lg">

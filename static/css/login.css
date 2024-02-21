@@ -101,7 +101,7 @@ button:hover {
 }
 .fade-out {
   opacity: 1;
-  transition: opacity 3s;
+  transition: opacity 5s;
 }
 
 .fade-out.hidden {
@@ -113,5 +113,5 @@ button:hover {
 }
 
 .fade-out {
-  animation: fadeOut 3s forwards;
+  animation: fadeOut 5s forwards;
 }
