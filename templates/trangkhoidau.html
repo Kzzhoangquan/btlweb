@@ -29,7 +29,7 @@
         {% if messages %}
             {% for m in messages %}
             <div class="fade-out success-message">
-                <P>{{m}}</P>
+                <P style="color: white;">{{m}}</P>
             </div>   
         {% endfor %} 
       {% endif %} 
@@ -54,7 +54,9 @@
                     </a>
 
                     <div class="d-lg-none ms-auto me-4">
-                        <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                        <!--a href="#top" class="navbar-icon bi-person smoothscroll"></!--a-->
+                        <a href="/login" class="smoothscroll" style="padding-left: 10px; font-weight: bolder">Đăng nhập</a>
+                        <a href="/dangky" class="text-white" style="padding-left: 10px; font-weight: bolder">Đăng kí</a>
                     </div>
     
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
