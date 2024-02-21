@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     backButton.style.display = 'block';
     backButton.addEventListener('click', function() {
         // Điều hướng trang về trang chủ
-        window.location.href = '/trangchu'; // Thay đổi '/'' thành URL của trang chủ của bạn
+        window.location.href = '/admin'; // Thay đổi '/'' thành URL của trang chủ của bạn
     });
     function sendDataToFlask(data) {
         fetch('/save-data', {

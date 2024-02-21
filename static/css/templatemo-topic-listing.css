@@ -1153,3 +1153,29 @@ blockquote {
   }
 }
 
+.success-message {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  background-color: #4CAF50;
+  color:#fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 9999;
+}
+.fade-out {
+  opacity: 1;
+  transition: opacity 5s;
+}
+
+.fade-out.hidden {
+  opacity: 0;
+}
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.fade-out {
+  animation: fadeOut 5s forwards;
+}

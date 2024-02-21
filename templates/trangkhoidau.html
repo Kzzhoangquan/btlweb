@@ -25,9 +25,25 @@
 
 -->
     </head>
-    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for m in messages %}
+            <div class="fade-out success-message">
+                <P>{{m}}</P>
+            </div>   
+        {% endfor %} 
+      {% endif %} 
+      {% endwith %} 
     <body id="top">
-
+        <!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for m in messages %}
+            <div class="fade-out success-message">
+                <P>{{m}}</P>
+            </div>   
+        {% endfor %} 
+      {% endif %} 
+      {% endwith %}   -->
         <main>
 
             <nav class="navbar navbar-expand-lg">
@@ -501,7 +517,7 @@
                     <div class="row">
 
                         <div class="col-12 text-center">
-                            <h2 class="text-white mb-4">How does it work?</h1>
+                            <h2 class="text-white mb-4">Mục tiêu</h1>
                         </div>
 
                         <div class="col-lg-10 col-12 mx-auto">
@@ -512,19 +528,29 @@
                                     </div>
 
                                     <li>
-                                        <h4 class="text-white mb-3">Search your favourite topic</h4>
+                                        <h4 class="text-white mb-3">Nắm vững kiến thức lập trình</h4>
 
-                                        <p class="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, cumque magnam? Sequi, cupiditate quibusdam alias illum sed esse ad dignissimos libero sunt, quisquam numquam aliquam? Voluptas, accusamus omnis?</p>
+                                        <p class="text-white">Hiểu được các nguyên tắc cơ bản của lập trình, bao gồm cú pháp, kiểu dữ liệu, biến, và các cấu trúc điều khiển cơ bản như rẽ nhánh và lặp và áp dụng vào các bài tập luyện tập.</p>
 
                                         <div class="icon-holder">
                                           <i class="bi-search"></i>
                                         </div>
                                     </li>
-                                    
-                                    <li>
-                                        <h4 class="text-white mb-3">Bookmark &amp; Keep it for yourself</h4>
 
-                                        <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint animi necessitatibus aperiam repudiandae nam omnis est vel quo, nihil repellat quia velit error modi earum similique odit labore. Doloremque, repudiandae?</p>
+                                    <li>
+                                        <h4 class="text-white mb-3">Hiểu hơn về Cấu trúc dữ liệu và Giải thuật</h4>
+
+                                        <p class="text-white">Hiểu biết sâu sắc về các cấu trúc dữ liệu.<br>Phân tích và thiết kế thuật toán.<br>Thực hành và áp dụng vào các bài tập luyện tập.</p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-sim"></i>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Nắm bắt các kiến thức về lập trình hướng đối tượng</h4>
+
+                                        <p class="text-white">Hiểu rõ các nguyên lý cơ bản của lập trình hướng đối tượng, bao gồm đóng gói, kế thừa, đa hình và trừu tượng hóa.<br>Biết cách sử dụng lớp và đối tượng để tổ chức mã nguồn của mình một cách có tổ chức và dễ bảo trì.<br>Hiểu rõ cách sử dụng kế thừa để tái sử dụng mã nguồn và cách sử dụng đa hình để tăng tính linh hoạt của mã nguồn.</p>
 
                                         <div class="icon-holder">
                                           <i class="bi-bookmark"></i>
@@ -532,9 +558,9 @@
                                     </li>
 
                                     <li>
-                                        <h4 class="text-white mb-3">Read &amp; Enjoy</h4>
+                                        <h4 class="text-white mb-3">Tiếp xúc với cộng đồng và tài nguyên học tập</h4>
 
-                                        <p class="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi vero quisquam, rem assumenda similique voluptas distinctio, iste est hic eveniet debitis ut ducimus beatae id? Quam culpa deleniti officiis autem?</p>
+                                        <p class="text-white">Tham gia vào cộng đồng lập trình, thảo luận, chia sẻ kinh nghiệm và tìm kiếm tài nguyên học tập để liên tục cập nhật và mở rộng kiến thức.</p>
 
                                         <div class="icon-holder">
                                           <i class="bi-book"></i>
@@ -570,22 +596,26 @@
                         </div>
 
                         <div class="col-lg-6 col-12 m-auto">
-                            <!--div class="accordion" id="accordionExample">
+                            <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        What is Topic Listing?
+                                            Nhóm 4 - Lớp 08 - Lớp lập trình WED
                                         </button>
                                     </h2>
 
                                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            Topic Listing is free Bootstrap 5 CSS template. <strong>You are not allowed to redistribute this template</strong> on any other template collection website without our permission. Please contact TemplateMo for more detail. Thank you.
+                                            <strong>Members :</strong><br>
+                                            Trần Xuân Đạt - B21DCCN <br>
+                                            Dương Hoàng Quân - B21DCCN<br>
+                                            Nguyễn Quốc Toàn - B21DCCN<br>
+                                            Trần Thị Phương Nhung - B21DCCN
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="accordion-item">
+                                <!--div class="accordion-item">
                                     <h2 class="accordion-header" id="headingTwo">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         How to find a topic?
@@ -611,8 +641,8 @@
                                             You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                                         </div>
                                     </div>
-                                </div>
-                            </!--div-->
+                               </div-->
+                            </div>
                         </div>
 
                     </div>
@@ -632,7 +662,7 @@
                             <iframe class="google-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2595.065641062665!2d-122.4230416990949!3d37.80335401520422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858127459fabad%3A0x808ba520e5e9edb7!2sFrancisco%20Park!5e1!3m2!1sen!2sth!4v1684340239744!5m2!1sen!2sth" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </!--div-->
 
-                        <div class="col-lg-3 col-md-6 col-12 mb-3 mb-lg- mb-md-0 ms-auto">
+                        <!--div class="col-lg-3 col-md-6 col-12 mb-3 mb-lg- mb-md-0 ms-auto">
                             <h4 class="mb-3">Head office</h4>
 
                             <p>Bay St &amp;, Larkin St, San Francisco, CA 94109, United States</p>
@@ -654,20 +684,20 @@
                                     info@company.com
                                 </a>
                             </p>
-                        </div>
+                        </div-->
 
                         <div class="col-lg-3 col-md-6 col-12 mx-auto">
-                            <h4 class="mb-3">Dubai office</h4>
+                            <h4 class="mb-3">WeLearn office</h4>
 
-                            <p>Burj Park, Downtown Dubai, United Arab Emirates</p>
+                            <p>Nguyễn Trãi, Hà Đông, Hà Nội</p>
 
                             <hr>
 
                             <p class="d-flex align-items-center mb-1">
                                 <span class="me-2">Phone</span>
 
-                                <a href="tel: 110-220-3400" class="site-footer-link">
-                                    110-220-3400
+                                <a href="#" class="site-footer-link">
+                                    1900 1508
                                 </a>
                             </p>
 
@@ -675,7 +705,7 @@
                                 <span class="me-2">Email</span>
 
                                 <a href="mailto:info@company.com" class="site-footer-link">
-                                    info@company.com
+                                    abc123@gmail.com
                                 </a>
                             </p>
                         </div>
@@ -723,13 +753,13 @@
 
                         <p class="text-white d-flex mb-1">
                             <a href="tel: 305-240-9671" class="site-footer-link">
-                                305-240-9671
+                                1900-1508
                             </a>
                         </p>
 
                         <p class="text-white d-flex">
                             <a href="mailto:info@company.com" class="site-footer-link">
-                                info@company.com
+                                abc1234@gmail.com
                             </a>
                         </p>
                     </div>
