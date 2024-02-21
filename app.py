@@ -23,6 +23,7 @@ questions = []
 #khoi tao trang web dau tien 
 @app.route('/')
 def index():
+    session.pop("user", None)
     return render_template('trangkhoidau.html')
 
 
