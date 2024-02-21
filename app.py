@@ -204,7 +204,22 @@ def send_email(email, verification_code):
         server.starttls()
         server.login(sender_email, sender_password)
         server.sendmail(sender_email, [email], message.as_string())
-        
+#ham gửi email thông bao về cập nhật câu hỏi:
+# def send_email1(email, tenmon , mamon):
+#     smtp_server = 'smtp.googlemail.com'
+#     smtp_port = 587
+#     sender_email = 'sieugazl02@gmail.com'
+#     sender_password = 'chyr ktgf sbmt uhcg'
+
+#     message = MIMEText(f'Bộ câu hỏi của môn {tenmon} vừa được cập nhật. Bạn có thể vào phần thực hành nhập mã {mamon} để làm ngay.')
+#     message['Subject'] = 'WEB HỌC TẬP NHÓM 4'
+#     message['From'] = sender_email
+#     message['To'] = email
+
+#     with smtplib.SMTP(smtp_server, smtp_port) as server:
+#         server.starttls()
+#         server.login(sender_email, sender_password)
+#         server.sendmail(sender_email, [email], message.as_string())        
         
 # nhập email để lấy lại mật khẩu
 @app.route('/quenmatkhau1', methods=["POST","GET"])
