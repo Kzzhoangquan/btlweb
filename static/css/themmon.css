@@ -1,7 +1,13 @@
+body{
+    background-image: linear-gradient(#7fffd4, #80d0c7);
+}
+
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
+    background-image: linear-gradient(#7fffd4, #80d0c7);
+    
 }
 
 label {
@@ -24,7 +30,10 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #78d07c;
+}
+#submitbutton{
+    margin-top: 2%;
 }
 .success-message {
     position: fixed;

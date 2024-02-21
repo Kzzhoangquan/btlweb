@@ -20,22 +20,22 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 1; i <= quantity; i++) {
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('question');
-            questionDiv.innerHTML = `<h2>Question ${i}:</h2>
+            questionDiv.innerHTML = `<h3>Câu ${i}:</h3>
                                      <input type="text" id="question${i}" name="question${i}" required title="Enter the subject">
-                                     <h2>Option 1:</h2>
+                                     <h4>Đáp án A:</h4>
                                      <input type="text" id="option1_${i}" name="option1_${i}" required title="Enter the subject">
-                                     <h2>Option 2:</h2>
+                                     <h4>Đáp án B:</h4>
                                      <input type="text" id="option2_${i}" name="option2_${i}" required title="Enter the subject">
-                                     <h2>Option 3:</h2>
+                                     <h4>Đáp án C:</h4>
                                      <input type="text" id="option3_${i}" name="option3_${i}" required title="Enter the subject">
-                                     <h2>Option 4:</h2>
+                                     <h4>Đáp án D:</h4>
                                      <input type="text" id="option4_${i}" name="option4_${i}" required title="Enter the subject">
-                                     <h2>Correct Answer for Question ${i}:</h2>
+                                     <h4>Câu trả lời đúng:</h4>
                                      <select id="correct-answer${i}" name="correct-answer${i}" required title="Enter the subject">
-                                         <option value="option1">Option 1</option>
-                                         <option value="option2">Option 2</option>
-                                         <option value="option3">Option 3</option>
-                                         <option value="option4">Option 4</option>
+                                         <option value="option1">Đáp án A</option>
+                                         <option value="option2">Đáp án B</option>
+                                         <option value="option3">Đáp án C</option>
+                                         <option value="option4">Đáp án D</option>
                                      </select>`;
             addQuestionForm.appendChild(questionDiv);
         }
