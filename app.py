@@ -69,11 +69,11 @@ def login():
 
 
 # trang chủ 
-@app.route('/trangchu',methods=["POST", "GET"])
-def trangchu():
+@app.route('/tracnghiem',methods=["POST", "GET"])
+def nhapma():
     if "user" in session:
         if request.method=="GET":
-            return render_template('trangchu.html')
+            return render_template('tracnghiem.html')
         else :
             mamonthi=request.form["mamonhoc"]
             questions.clear()
