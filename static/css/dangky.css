@@ -100,7 +100,7 @@ button:hover {
   z-index: 9999;
 }
 .fade-out {
-  opacity: 1;
+  opacity: 0.8;
   transition: opacity 3s;
 }
 
