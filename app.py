@@ -38,7 +38,11 @@ def home():
 @app.route('/admin')
 def admin():
     if "user" in session:
-        return render_template("admin.html")  
+        if session['user'] == 2:
+            return render_template("admin.html")  
+        else:
+            flash("Chức năng chỉ dành cho người quản trị!", category="info")
+            return redirect(url_for('home'))
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
@@ -78,13 +82,16 @@ def nhapma():
             return render_template('tracnghiem.html')
         else :
             mamonthi=request.form["mamonhoc"]
+
+
             questions.clear()
-            for row in cursor.execute("SELECT * FROM NGANHANGCAUHOI WHERE mamon IN (?)",(mamonthi)):
+            
+            for row in cursor.execute("SELECT * FROM NGANHANGCAUHOI WHERE mamon IN (?)",(mamonthi)): 
                 res={}
                 res['question']=row[3]
                 options=[]
                 options.append(row[4])
-                options.append(row[5])
+                options.append(row[5])          
                 options.append(row[6])
                 options.append(row[7])
                 res['options']=options
