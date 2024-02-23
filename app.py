@@ -10,8 +10,8 @@ from email.mime.text import MIMEText
 app=Flask(__name__)
 app.config["SECRET_KEY"]="quanhoangduong"
 # LAPTOP-FF387IJ3\HOANGQUAN
-server = 'LAPTOP-FF387IJ3\HOANGQUAN'
-database = 'Account'
+server = 'XuanDat'
+database = 'dbweb'
 username = 'quan'
 password = '123456'
 connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
