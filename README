@@ -1,9 +1,22 @@
-# Đầu tiên bạn hãy cài hai thư viện flask và pyodbc về nha
-# sau đó import file database.dacpac vào SQL SERVER của bn
+
+
+Framework: Flask, bootstrap
+Languages: Python, JavaScript, HTML, CSS
+Compiler: VSCode
+
+Giới thiệu: 
+Là sản phẩm nhỏ của Nhóm 3 - Lớp 08 - Lập trình WEB PTIT gồm 4 thành viên Quân, Đạt, Toàn, Nhung. Sản phẩm còn sơ sài, và 1 số tính năng đang được phát triển và cải thiện.
+
+Ý tưởng:
+Mong muốn tạo ra trang kiến thức về lập trình hoàn toàn miễn phí cho người Việt, thay vì phải đi tìm kiếm những trang nước ngoài như GeeksforGeeks, w3school, ..., chứa các tính năng cần thiết để mọi người có thể
+học và luyện tập, và hoàn toàn bằng tiếng Việt!
+
+HOW TO USE:
+# Đầu tiên bạn hãy cài hai thư viện flask và pyodbc về.
+# sau đó import file database.dacpac vào database trên Microsoft SQL SERVER của bạn
 # vào phần app.py sửa:
-    #server = 'LAPTOP-FF387IJ3\HOANGQUAN'
-    #database = 'Account' /ten database sử dụng để làm việc
-    #username = 'quan' tài khoản khi vào database
-    #password = '123456'
-# theo máy tính của bạn
-# xong chạy app.py nó sẽ hiện ra đường link trong terminal để bạn chạy web
+    #server = 'XuanDat' -> tên Server trên Microsoft SQL Server
+    #database = 'Account' /ten database sử dụng để import file database.dacpac
+
+# xong chạy app.py
+# xuất hiện cổng :5000 trên VSCODE -> chạy cổng trên Browser bất kì.
