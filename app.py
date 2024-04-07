@@ -123,6 +123,7 @@ def nhapma():
             if not search_result:
                 similar_names = search_similar_names(monthi)
                 a=similar_names[0][0]
+
                 flash(f"Có phải bạn muốn làm bài trắc nghiệm của môn học: '{a}'. Bạn hãy nhập lại tên môn để làm nhé", category="info")
                 return redirect(url_for("nhapma"))
 
