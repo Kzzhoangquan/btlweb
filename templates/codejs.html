@@ -31,15 +31,7 @@ https://templatemo.com/tm-590-topic-listing
     </head>
     
     <body id="top">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for m in messages %}
-            <div class="fade-out success-message">
-                <P style="color: white;">{{m}}</P>
-            </div>   
-            {% endfor %} 
-        {% endif %} 
-    {% endwith %}  
+
         <main>
 
             <nav class="navbar navbar-expand-lg">
@@ -82,7 +74,7 @@ https://templatemo.com/tm-590-topic-listing
                     <div class="row">
 
                         <div class="col-lg-8 col-12 mx-auto">
-                            <h1 class="text-white text-center">Discover. Learn. Enjoy</h1>
+                            <h1 class="text-white text-center">CODE JAVASCRIPT</h1>
 
                             <!--h6 class="text-center">Chào mừng ADMIN</!--h6-->
 
@@ -110,26 +102,15 @@ https://templatemo.com/tm-590-topic-listing
 
                         <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                             <div class="custom-block bg-white shadow-lg">
-                                <a href="/tracnghiem">
-                                    <div class="d-flex">
-                                        <div>
-                                            <h5 class="mb-2">Thực hành qua những bài code</h5>
-
-                                            <p class="mb-0">Tính năng đang phát triển...</p>
-                                        </div>
-
-                                        <span class="badge bg-design rounded-pill ms-auto">14</span>
-                                    </div>
-
-                                    <img src="static/images/topics/undraw_Remote_design_team_re_urdx.png" class="custom-block-image img-fluid" alt="">
-                                </a>
+                                <textarea id="js_code" style="width: 100%; height: 80%;"></textarea><br>
+                                <button onclick="runCode()"  class="btn custom-btn mt-2 mt-lg-3">Run</button>
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-12">
-                            <div class="custom-block custom-block-overlay">
-                                <div class="d-flex flex-column h-100">
-                                    <img src="static/images/businesswoman-using-tablet-analysis.jpg" class="custom-block-image img-fluid" alt="">
+                            <div class="custom-block custom-block-overlay bg-white shadow-lg">
+                                <!-- <div class="d-flex flex-column h-100"> -->
+                                    <!-- <img src="static/images/businesswoman-using-tablet-analysis.jpg" class="custom-block-image img-fluid" alt="">
 
                                     <div class="custom-block-overlay-text d-flex">
                                         
@@ -141,16 +122,16 @@ https://templatemo.com/tm-590-topic-listing
                                                      câu hỏi trắc nghiệm nhé!</br> Hãy nhập tên môn học bạn muốn làm</p>
                                                 
                                                 <form action="" method="POST">
-                                                    <input type="text" id="course-code" placeholder="Nhập tên môn học" name="monhoc" class="btn custom-btn mt-2 mt-lg-3" >
+                                                    <input type="text" id="course-code" placeholder="Nhập tên môn học" name="mamonhoc" class="btn custom-btn mt-2 mt-lg-3" >
                                                     <button type="submit" class="btn custom-btn mt-2 mt-lg-3" >Xác Nhận</button>
                                                 </form>
                                                 
                                             
                                             
-                                            </div>
-                                        
-                                        <span class="badge bg-finance rounded-pill ms-auto">25</span>
-                                    </div>
+                                            </div> -->
+                                        <div id="result" ></div>
+                                        <!-- <span class="badge bg-finance rounded-pill ms-auto">25</span> -->
+                                    <!-- </div> -->
 
                                     <!--div class="social-share d-flex">
                                         <p class="text-white me-4">Share:</p>
@@ -172,8 +153,8 @@ https://templatemo.com/tm-590-topic-listing
                                         <a href="#" class="custom-icon bi-bookmark ms-auto"></a>
                                     </!--div-->
 
-                                    <div class="section-overlay"></div>
-                                </div>
+                                    <!-- <div class="section-overlay"></div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -260,12 +241,23 @@ https://templatemo.com/tm-590-topic-listing
             </div>
         </footer>
 
+
+        <!-- JAVASCRIPT FILES -->
+        <script>
+            function runCode() {
+                var jsCode = document.getElementById('js_cosde').value;
+                try {
+                    eval(jsCode);
+                } catch (error) {
+                    document.getElementById('result').innerHTML = "Error: " + error.message;
+                }
+            }
+        </script>
         <script>
             function goBack() {
               window.history.back();
             }
         </script>
-        <!-- JAVASCRIPT FILES -->
         <script src="static/js/jquery.min.js"></script>
         <script src="static/js/bootstrap.bundle.min.js"></script>
         <script src="static/js/jquery.sticky.js"></script>

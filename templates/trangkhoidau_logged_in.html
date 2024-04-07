@@ -24,6 +24,13 @@
 <!--
 
 -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        <script src="https://kit.fontawesome.com/dcbd7d5889.js" crossorigin="anonymous"></script>
+        <!-- Kết nối với fontawesome để dùng một số icon -->
+        <link rel="icon" href="https://images.ctfassets.net/mrop88jh71hl/55rrbZfwMaURHZKAUc5oOW/9e5fe805eb03135b82e962e92169ce6d/python-programming-language.png" type="image/x-icon" >
+        <!-- Tạo favicon cho website -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Kết nối jquery online -->
     </head>
     
     <body id="top">
@@ -152,7 +159,7 @@
                                             <a href="hoc_ngon_ngu_nao" class="btn custom-btn mt-2 mt-lg-3">Đọc ngay</a>
                                         </div>
 
-                                        <span class="badge bg-finance rounded-pill ms-auto">25</span>
+                                        
                                     </div>
 
                                     <div class="social-share d-flex">
@@ -700,6 +707,76 @@
                 </div>
             </section>
         </main>
+    <!-- CHAT BAR BLOCK -->
+    <form>
+        <!-- Khung chat -->
+        <div class="chat-bar-collapsible">
+            <!-- Header của khung chat -->
+            <button id="chat-button" type="button" class="collapsible">Chatbot hỗ trợ 
+                <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
+            </button>
+
+            <div class="content">
+                <div class="full-chat-block">
+                    <!-- Message Container -->
+                    <div class="outer-container">
+                        <div class="chat-container">
+                            <!-- Messages -->
+                            <div id="chatbox">
+                                <h5 id="chat-timestamp"></h5>
+                                <p id="botStarterMessage" class="botText"></p>
+                            </div>
+
+                            <!-- User inputbox gồm 2 thẻ con là userInput và chat-bar-icon -->
+                            <div class="chat-bar-input-block">
+                                <div id="userInput">
+                                    <input id="text" class="input-box" type="text" name="msg"
+                                        placeholder="Tap 'Enter' to send a message">
+                                    <p></p>
+                                </div>
+
+                                <div class="chat-bar-icons">
+                                    <i id="chat-icon" onclick="heartButton()"></i>
+                                        <button type="submit" id="send" >
+                                            <i style="font-size:24px; color:#84495F;" class="fa-sharp fa-solid fa-paper-plane"></i>
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <form>
+
+    <script>
+        $(document).ready(function() {  
+            // sử dụng để chạy mã JavaScript khi DOM của trang web được tải hoàn tất
+            // ngăn mã JavaScript cố gắng truy cập các phần tử HTML trước khi chúng được tạo
+            $("form").on("submit", function(event) {
+                // gắn trình xử lý sự kiện vào biểu mẫu
+                var rawText = $("#text").val(); //biến rawText lưu dữ liệu của thẻ có id = text
+                var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+                $("#text").val(""); //xóa giá trị của trường đầu vào có id = text, ngăn người dùng gửi nhiều tin nhắn 1 lúc
+                $("#chatbox").append(userHtml);
+                //nối phần tử userHtml vào phần tử chatbox => thêm tin nhắn của người dùng vào danh sách tin nhắn trong boxchat
+                $.ajax({
+                    data: {
+                        msg: rawText,
+                    },
+                    type: "POST",
+                    url: "/chatbot",
+                    //gửi dữ liệu từ rawText lên server
+                }).done(function(data) {
+                    var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+                    $("#chatbox").append($.parseHTML(botHtml));
+                    document.getElementById("userInput").scrollIntoView(true);
+                    //cuộn trang về đầu userInput khi nhận được câu trả lời => thấy phẩn hồi của chat bot ngay lập tức
+                });
+                event.preventDefault();
+            });
+        });
+    </script>
 
 <footer class="site-footer section-padding">
             <div class="container">
@@ -774,7 +851,55 @@
             </div>
         </footer>
 
-
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+        
+                for (let i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        // thêm hoặc xóa active vào collapsible
+                        var content = this.nextElementSibling;
+        
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        }
+        
+                        //tạo hiệu ứng cửa số xuất hiện và biến mất, kết hợp keyframe => trượt lên trượt xuống
+                    });
+                }
+        
+            function getTime() {
+                let today = new Date();
+                hours = today.getHours();
+                minutes = today.getMinutes();
+        
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+        
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+        
+                let time = hours + ":" + minutes;
+                return time;
+            }
+        
+            // Gets the first message
+            function firstBotMessage() {
+                let firstMessage = "Chào bạn, mình là Chatbot hỗ trợ học tập của trang web. Mình có thể giúp gì cho bạn"
+                document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+        
+                let time = getTime();
+        
+                $("#chat-timestamp").append(time);
+                document.getElementById("userInput").scrollIntoView(true);
+            }
+        
+            firstBotMessage();
+        </script>
         <!-- JAVASCRIPT FILES -->
         <script src="static/js/jquery.min.js"></script>
         <script src="static/js/bootstrap.bundle.min.js"></script>

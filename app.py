@@ -1,30 +1,43 @@
 from flask import Flask,redirect,url_for,render_template,request,session,flash,jsonify,session
-from functools import wraps
-import os
-from os import path
-import pyodbc
-import json
+# import pyodbc
 import random
 import smtplib
 from email.mime.text import MIMEText
+import pandas as pd
+from fuzzywuzzy import process  # type: ignore
+from pyvi import ViTokenizer
+import re
+from sklearn.feature_extraction.text import CountVectorizer
+import pickle
+import mysql.connector
+db=mysql.connector.connect(user='root',password='123456',host='localhost')
 app=Flask(__name__)
 app.config["SECRET_KEY"]="quanhoangduong"
 # LAPTOP-FF387IJ3\HOANGQUAN
-server = 'LAPTOP-FF387IJ3\HOANGQUAN'
-database = 'Account'
-username = 'quan'
-password = '123456'
-connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
-conn = pyodbc.connect(connection_string)
+# server = 'LAPTOP-FF387IJ3\HOANGQUAN'
+# database = 'Account'
+# username = 'quan'
+# password = '123456'
+# connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
+# conn = pyodbc.connect(connection_string)
+conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
 questions = []
+
+
 
 #khoi tao trang web dau tien 
 @app.route('/')
 def index():
     session.pop("user", None)
     return render_template('trangkhoidau.html')
+
+
+# @app.route('/')
+# def index():
+#     # session.pop("user", None)
+#     return render_template('codejs.html')
 
 
 @app.route('/home')
@@ -39,18 +52,24 @@ def home():
 def admin():
     if "user" in session:
         return render_template("admin.html")  
-    else:
+    else: 
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
     
 #Đăng nhập và xử lý đăng nhâp
 def check(a,b):
     if a == "admin@123.com" and b == "123456":
-        return 2    
-    for row in cursor.execute("select * from NGUOIDUNG"):
-        if row[1] == a and row[2] == b:
-            return 1
+        return 2   
+    cursor.execute("SELECT * FROM btlweb.nguoidung")
+    result = cursor.fetchall()
+    if result is not None:
+        for row in result:
+            if row[1] == a and row[2] == b:
+                return 1
     return 0
+
+
+
 
 @app.route('/login', methods=["POST", "GET"] )
 def login():
@@ -70,27 +89,58 @@ def login():
         return render_template("login.html")
 
 
-# trang chủ 
+# phần xử lý cho việc người dùng nhập tên môn để làm bai trắc nghiệm
+
+def search_similar_names(name):
+    conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+    cursor = conn.cursor()
+    # Lấy tất cả các tên từ cơ sở dữ liệu
+    cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
+    res=cursor.fetchall()
+    all_names=[str(row[0]) for row in res]
+    # Sử dụng fuzzy matching để tìm các tên gần giống
+    similar_names = process.extract(name, all_names, limit=1)
+    conn.close()
+    return similar_names
+
+def search_name_in_database(name):
+    conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+    cursor = conn.cursor()
+    # Thực hiện truy vấn SQL để tìm kiếm tên trong cơ sở dữ liệu
+    cursor.execute("SELECT * FROM btlweb.nganhangcauhoi WHERE tenmon=%s", (name,))
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 @app.route('/tracnghiem',methods=["POST", "GET"])
 def nhapma():
     if "user" in session:
         if request.method=="GET":
             return render_template('tracnghiem.html')
         else :
-            mamonthi=request.form["mamonhoc"]
-            questions.clear()
-            for row in cursor.execute("SELECT * FROM NGANHANGCAUHOI WHERE mamon IN (?)",(mamonthi)):
-                res={}
-                res['question']=row[3]
-                options=[]
-                options.append(row[4])
-                options.append(row[5])
-                options.append(row[6])
-                options.append(row[7])
-                res['options']=options
-                res['correctAnswer']=row[8]
-                questions.append(res)
-            return redirect(url_for("get_questions"))
+            monthi=request.form["monhoc"]
+            search_result = search_name_in_database(monthi)
+            if not search_result:
+                similar_names = search_similar_names(monthi)
+                a=similar_names[0][0]
+                flash(f"Có phải bạn muốn làm bài trắc nghiệm của môn học: '{a}'. Bạn hãy nhập lại tên môn để làm nhé", category="info")
+                return redirect(url_for("nhapma"))
+
+            else:
+                questions.clear()
+                for row in search_result:
+                    res={}
+                    res['question']=row[3]
+                    options=[]
+                    options.append(row[4])
+                    options.append(row[5])
+                    options.append(row[6])
+                    options.append(row[7])
+                    res['options']=options
+                    res['correctAnswer']=row[8]
+                    questions.append(res)
+                return redirect(url_for("get_questions"))
+
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
@@ -128,7 +178,7 @@ def save_data():
     if "user" in session:
         data = request.json  # Lấy dữ liệu được gửi từ trang web
         # Đoạn mã xử lý dữ liệu ở đây (ví dụ: lưu vào cơ sở dữ liệu)
-        conn = pyodbc.connect(connection_string)
+        conn=mysql.connector.connect(user='root',password='123456',host='localhost')
         cursor = conn.cursor()
         for i in data.get('questions'):
             question_text = i.get('question_text')
@@ -146,7 +196,7 @@ def save_data():
             else:
                 correct_answer=option4
             # Thực hiện câu lệnh SQL INSERT INTO
-            cursor.execute("INSERT INTO NGANHANGCAUHOI(mamon,tenmon,question,option1,option2,option3,option4,correctAnswer) VALUES (?, ?, ?, ?, ?, ?, ?,?)",
+            cursor.execute("INSERT INTO `btlweb`.`nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s,%s)",
                     (data.get('subject_code'), data.get('subject_name'), question_text, option1, option2, option3, option4, correct_answer))
             conn.commit()
         # Sau đó, trả về phản hồi cho trang web
@@ -156,12 +206,45 @@ def save_data():
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
 
+# thêm câu hỏi từ file excel vào CSDL
+@app.route('/upload_excel', methods=['POST'])
+def upload_excel():
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file'
+
+    if file:
+        filename = file.filename
+        a=request.form["mamonhoc"]
+        b=request.form["tenmonhoc"]
+        # Lưu dữ liệu file vào cơ sở dữ liệu
+        # save_to_database(filename, data)
+        df = pd.read_excel(file)
+        conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+        cursor = conn.cursor()
+        for index, row in df.iterrows():
+            if row.iloc[5]=="a" or row.iloc[5]=="A":
+                correct=row.iloc[1]
+            if row.iloc[5]=="b" or row.iloc[5]=="B":
+                correct=row.iloc[2]
+            if row.iloc[5]=="c" or row.iloc[5]=="C":
+                correct=row.iloc[3]
+            if row.iloc[5]=="d" or row.iloc[5]=="D":
+                correct=row.iloc[4]
+            cursor.execute("INSERT INTO `btlweb`.`nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s,%s)",
+            (a,b,row.iloc[0],row.iloc[1],row.iloc[2],row.iloc[3],row.iloc[4],correct))
+            conn.commit()    
+        flash("File đã được tải lên và lưu trữ trong cơ sở dữ liệu thành công!",category="info")
+        return redirect(url_for("admin"))
 
 #xử lý đăng ký tại đây
 def check1(a):
-    for row in cursor.execute("select * from NGUOIDUNG"):
-        if row[1] == a:
-            return 0
+    cursor.execute("SELECT * FROM btlweb.nguoidung")
+    result = cursor.fetchall()
+    if result is not None:
+        for row in result:
+            if row[1]==a:
+                return 0
     return 1
 
 @app.route('/dangky', methods=["POST", "GET"] )
@@ -170,7 +253,7 @@ def dangky():
         tendangnhap=request.form["username"]
         matkhau=request.form["password"]
         if check1(tendangnhap)!=0:
-            cursor.execute("INSERT INTO NGUOIDUNG(username,pass) VALUES (?, ?)",(tendangnhap,matkhau))
+            cursor.execute("INSERT INTO `btlweb`.`nguoidung` (`username`, `pass`) VALUES (%s, %s)",(tendangnhap,matkhau))
             conn.commit()
             flash("Bạn đăng ký tài khoản thành công",category="info")
             return redirect(url_for("index"))
@@ -256,7 +339,10 @@ def newpassword():
         mk2 = request.form['password2']
         if mk1==mk2:
             #cap nhat mk cho sql
-            cursor.execute("UPDATE NGUOIDUNG SET pass=(?) WHERE username IN (?)",(mk1),(session['email']))
+            cursor.execute("SELECT * FROM btlweb.nguoidung where username=%s;",(session['email'],))
+            result=cursor.fetchall()
+            a=result[0][0]
+            cursor.execute("UPDATE btlweb.nguoidung SET pass=%s WHERE userid = %s",(mk1,a))
             conn.commit()
             flash("Lấy lại mật khẩu thành công",category="info")
             return redirect(url_for("index"))
@@ -283,7 +369,18 @@ def HTML0():
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
+    
 
+#luyện code HTML
+
+@app.route('/codehtml')
+def codehtml():
+    if "user" in session:
+        return render_template('codehtml.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
+    
 @app.route('/HTML_la_gi')
 def HTML1():
     if "user" in session:
@@ -355,14 +452,79 @@ def DSA2():
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
         return redirect(url_for("index"))
-
+#luyện code js
+@app.route('/codejs')
+def codejs():
+    if "user" in session:
+        return render_template('codejs.html')
+    else:
+        flash("Bạn hãy đăng nhập tài khoản",category="info")
+        return redirect(url_for("index"))
+    
 @app.route('/gioi_thieu_JS')
 def JS1():
     if "user" in session:
         return render_template('/gioithieuJS.html')
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
-        return redirect(url_for("index"))  
+        return redirect(url_for("index"))
+
+# phần này dành cho chat bot  
+
+clf = pickle.load(open('Colab\\NB_ChatBot_model.pkl', 'rb'))
+vocabulary_to_load = pickle.load(open('Colab\\vocab.pkl', 'rb'))
+le = pickle.load(open('Colab\\decode_label.pkl', 'rb'))
+
+@app.route("/chatbot", methods=["POST"])
+def chatbot_response():
+    if request.method == "POST":
+        message = request.form.get("msg")
+        ok = prediction(message)
+    return ok
+
+
+def tienxuly(document):
+    document = ViTokenizer.tokenize(document)
+    # đưa về lower
+    document = document.lower()
+    # xóa các ký tự không cần thiết
+    document = re.sub(r'[^\s\wáàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệóòỏõọôốồổỗộơớờởỡợíìỉĩịúùủũụưứừửữựýỳỷỹỵđ_]',' ',document)
+    # xóa khoảng trắng thừa
+    document = re.sub(r'\s+', ' ', document).strip()
+    return document
+
+
+stopword = ["bot","ra"]
+
+
+def remove_stopwords(line):
+    words = []
+    for word in line.strip().split():
+        if word not in stopword:
+            words.append(word)
+    return ' '.join(words)
+
+
+def prediction(input):
+    ngram_size = 1
+    loaded_vectorizer = CountVectorizer(ngram_range=(ngram_size, ngram_size), min_df=1,
+                                        vocabulary=vocabulary_to_load)
+    loaded_vectorizer._validate_vocabulary()
+    a = tienxuly(input)
+
+    input1 = remove_stopwords(a)
+    vect = loaded_vectorizer.transform([input1]).toarray()
+    predict = clf.predict(vect)
+    predict = le.inverse_transform(predict)[0]
+    
+    if predict=="noanswer":
+        predict= 'Xin lỗi bạn, câu này mình không biết trả lời như thế nào. Bạn vui lòng liện hệ theo số điện thoại 123456 để được tư vấn trực tiếp hoặc nhấn vào nút "Trợ giúp%s" ở góc trái trên cùng màn hình để được giúp đỡ.'
+
+    return predict
+
+
+
+
 
 if __name__ == "__main__":
     

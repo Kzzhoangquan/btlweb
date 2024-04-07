@@ -31,7 +31,15 @@ https://templatemo.com/tm-590-topic-listing
     </head>
     
     <body id="top">
-
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for m in messages %}
+            <div class="fade-out success-message">
+                <P style="color: white;">{{m}}</P>
+            </div>   
+        {% endfor %} 
+      {% endif %} 
+      {% endwith %} 
         <main>
 
             <nav class="navbar navbar-expand-lg">
@@ -115,12 +123,12 @@ https://templatemo.com/tm-590-topic-listing
 
                         <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                             <div class="custom-block bg-white shadow-lg">
-                                <a href="/admin">
+                                <a href="/themmon">
                                     <div class="d-flex">
                                         <div>
-                                            <h5 class="mb-2">Thêm Khoá học</h5>
+                                            <h5 class="mb-2">Thêm câu hỏi</h5>
 
-                                            <p class="mb-0">Tính năng đang phát triển...</p>
+                                            <p class="mb-0">Bạn thêm câu hỏi bằng cách bấm lần lượt từng câu hỏi</p>
                                         </div>
 
                                         <span class="badge bg-design rounded-pill ms-auto">14</span>
@@ -137,18 +145,22 @@ https://templatemo.com/tm-590-topic-listing
                                     <img src="static/images/businesswoman-using-tablet-analysis.jpg" class="custom-block-image img-fluid" alt="">
 
                                     <div class="custom-block-overlay-text d-flex">
-                                        <a href="/themmon">
+                                        
                                             <div>
                                             
 
                                                 <h5 class="text-white mb-2">Thêm câu hỏi Luyện Tập</h5>
-    
-                                                <p class="text-white">Bạn hãy thêm những bộ câu hỏi trắc nghiệm để giúp các thành viên đăng nhập vào web học tập hiệu quả hơn.</p>
-                                                
+                                                <p class="text-white">Hệ thống sẽ thêm câu hỏi dựa vào data trong file excel của bạn</p>
+                                                <form action="/upload_excel" method="POST" enctype="multipart/form-data">
+                                                    <input type="text" id="course-code" placeholder="Nhập mã môn học" name="mamonhoc" class="btn custom-btn mt-2 mt-lg-3" ><br>
+                                                    <input type="text" id="course-code" placeholder="Nhập tên môn học" name="tenmonhoc" class="btn custom-btn mt-2 mt-lg-3" ><br>
+                                                    <input type="file" id="course-code" name="file" accept=".xlsx" class="btn custom-btn mt-2 mt-lg-3" >
+                                                    <button type="submit" class="btn custom-btn mt-2 mt-lg-3" >Xác Nhận</button>
+                                                </form>
                                             
                                             
                                             </div>
-                                        </a>
+                                        
                                         <span class="badge bg-finance rounded-pill ms-auto">25</span>
                                     </div>
 

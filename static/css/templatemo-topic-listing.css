@@ -1153,6 +1153,7 @@ blockquote {
   }
 }
 
+/* cho phần thông báo */
 .success-message {
   position: fixed;
   top: 50px;
@@ -1165,7 +1166,7 @@ blockquote {
 }
 .fade-out {
   opacity: 1;
-  transition: opacity 5s;
+  transition: opacity 10s;
 }
 
 .fade-out.hidden {
@@ -1177,5 +1178,159 @@ blockquote {
 }
 
 .fade-out {
-  animation: fadeOut 5s forwards;
+  animation: fadeOut 10s forwards;
+}
+
+/* Xây dựng ô chatbox */
+/* CSS cho biểu tượng hoặc nút */
+
+
+.chat-bar-collapsible {
+  position: fixed;
+  bottom: 0;
+  right: 25px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Chỉnh header của boxchat*/
+.collapsible {
+  background-color:#80d0c7;
+  color: #fff;
+  cursor: pointer;
+  padding: 18px;
+  width: 350px;
+  text-align: left;
+  outline: none;
+  font-size: 18px;
+  border-radius: 16px 16px 0px 0px;
+  border: 3px solid white;
+  border-bottom: none;
+  font-weight: 600;
+}
+
+/* Xây dựng phần nội dung của boxchat */
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
+.full-chat-block {
+  width: 350px;
+  background: white;
+  text-align: center;
+  overflow: auto;
+  height: max-content;
+  transition: max-height 1s;
+}
+
+.outer-container {
+  min-height: 500px;
+  position: relative;
+}
+
+/* Nội dung trong phần khung chat */
+.chat-container {
+  position: absolute;
+  max-height: 500px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  scroll-behavior: smooth;
+}
+
+/* ẩn thanh scrollbar khi chưa có nhiều nội dung */
+.chat-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* xây dựng bố cục phần nhập câu hỏi */
+.chat-bar-input-block {
+  display: flex;
+  float: left;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  background-color: rgb(219, 218, 218);
+  padding: 10px 0px 10px 10px;
+  margin-top: 16px;
+}
+
+.chat-bar-icons {
+  display: flex;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  width: 25%;
+}
+
+
+#userInput {
+  width: 75%;
+}
+
+/* căn chỉnh box nhập input */
+.input-box {
+  float: left;
+  border: 1px solid rgb(129, 127, 127);
+  width: 100%;
+  border-radius: 16px;
+  padding: 10px;
+  font-size: 16px;
+  color: #000;
+  background-color: white;
+  outline: none
+}
+
+
+/* căn chỉnh bóng chat */
+.userText {
+  color: white;
+  font-size: 16px;
+  text-align: right;
+  clear: both;
+  word-wrap: break-word;
+}
+
+/* căn chỉnh chữ trong bóng chat */
+.userText span {
+  text-align: left;
+  line-height: 1.5em;
+  display: inline-block;
+  background: #2a8af8;
+  padding: 10px;
+  border-radius: 12px;
+  border-bottom-right-radius: 2px;
+  max-width: 80%;
+  margin: 10px;
+  animation: floatup 0.75s
+}
+
+.botText {
+  color: #000;
+  font-size: 16px;
+  text-align: left;
+}
+
+.botText span {
+  line-height: 1.5em;
+  display: inline-block;
+  background: #d4d4d4;
+  padding: 10px;
+  border-radius: 8px;
+  border-bottom-left-radius: 2px;
+  max-width: 80%;
+  margin-left: 10px;
+  animation: floatup 2.5s;
+}
+
+@keyframes floatup {
+  from {
+      transform: translateY(14px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0px);
+      opacity: 1;
+  }
 }
