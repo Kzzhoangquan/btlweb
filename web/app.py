@@ -472,9 +472,9 @@ def JS1():
 
 # phần này dành cho chat bot  
 
-clf = pickle.load(open('Colab\\NB_ChatBot_model.pkl', 'rb'))
-vocabulary_to_load = pickle.load(open('Colab\\vocab.pkl', 'rb'))
-le = pickle.load(open('Colab\\decode_label.pkl', 'rb'))
+clf = pickle.load(open('web\\Colab\\NB_ChatBot_model.pkl', 'rb'))
+vocabulary_to_load = pickle.load(open('web\\Colab\\vocab.pkl', 'rb'))
+le = pickle.load(open('web\\Colab\\decode_label.pkl', 'rb'))
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot_response():
