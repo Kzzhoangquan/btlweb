@@ -120,6 +120,7 @@ def nhapma():
         else :
             monthi=request.form["monhoc"]
             search_result = search_name_in_database(monthi)
+
             if not search_result:
                 similar_names = search_similar_names(monthi)
                 a=similar_names[0][0]
