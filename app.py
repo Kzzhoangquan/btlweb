@@ -20,11 +20,11 @@ app.config["SECRET_KEY"]="quanhoangduong"
 # password = '123456'
 # connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
 # conn = pyodbc.connect(connection_string)
-conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+conn=mysql.connector.connect(user='root',password='Xuandat1106',host='127.0.0.1')
 cursor = conn.cursor()
 
 questions = []
-
+list_mon = ["oop", "lsd", "1"]
 
 
 #khoi tao trang web dau tien 
@@ -472,9 +472,9 @@ def JS1():
 
 # phần này dành cho chat bot  
 
-clf = pickle.load(open('web\\Colab\\NB_ChatBot_model.pkl', 'rb'))
-vocabulary_to_load = pickle.load(open('web\\Colab\\vocab.pkl', 'rb'))
-le = pickle.load(open('web\\Colab\\decode_label.pkl', 'rb'))
+clf = pickle.load(open('Colab/NB_ChatBot_model.pkl', 'rb'))
+vocabulary_to_load = pickle.load(open('Colab/vocab.pkl', 'rb'))
+le = pickle.load(open('Colab/decode_label.pkl', 'rb'))
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot_response():
