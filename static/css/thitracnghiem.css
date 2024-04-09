@@ -4,7 +4,7 @@ body {
 }
 
 #question-container {
-    margin: 20px auto;
+    margin: 30px auto;
     width: 80%;
 }
 #result{
@@ -12,17 +12,17 @@ body {
     width: 50%;
 }
 .question {
+    margin-left: 190px;
     width: 60%;
     background: #fff;
     border-radius: 5px;
-    
-    
+    font-size:1.3rem
 }
 
 .option-btn {
     width: 100%;
     display: block;
-    margin-bottom: 10px; /* Khoảng cách giữa các nút */
+    margin-bottom: 15px; /* Khoảng cách giữa các nút */
     padding: 10px;
     border: 1px solid #84c5fe;
     border-radius: 5px;
@@ -30,7 +30,6 @@ body {
     background: aliceblue;
     align-items: center;
     justify-content: center;
-
 }
 
 .option-btn:hover {
@@ -59,11 +58,11 @@ body {
     border-radius: 10px;
     background-color: beige;
     position: absolute;
-    margin-left: 15%;
+    margin-left: 70%;
     transform: translate(-50%, -50%);
     cursor: pointer;
     width: 10%;
-   
+    font-size:1.5rem
 }
 .backhome{
     border: 1px solid #fff;
@@ -75,3 +74,12 @@ body {
     cursor: pointer;
     width: 10%;
 }
+
+.sidebar-p-x{padding-left:18.75px;padding-right:18.75px}
+
+.btn{
+    display:inline-block;font-weight:400;text-align:center;white-space:nowrap;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:1px solid transparent;padding:.375rem .75rem;font-size:1.4rem;line-height:1.5;border-radius:.25rem;-webkit-transition:background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;transition:background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;transition:background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;transition:background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out
+}
+.btn-success{color:#111;background-color:#66bb6a;border-color:#66bb6a}
+
+.btn-success:hover{color:#fff;background-color:#4dae52;border-color:#49a54e}.btn-success.focus,.btn-success:focus{-webkit-box-shadow:0 0 0 .2rem rgba(102,187,106,.5);box-shadow:0 0 0 .2rem rgba(102,187,106,.5)}.btn-success.disabled,.btn-success:disabled{background-color:#66bb6a;border-color:#66bb6a}.btn-success:not([disabled]):not(.disabled).active,.btn-success:not([disabled]):not(.disabled):active,.show>.btn-success.dropdown-toggle{color:#fff;background-color:#49a54e;border-color:#459c49;-webkit-box-shadow:0 0 0 .2rem rgba(102,187,106,.5);box-shadow:0 0 0 .2rem rgba(102,187,106,.5)}
