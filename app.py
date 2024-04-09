@@ -5,12 +5,13 @@ import smtplib
 from email.mime.text import MIMEText
 import pandas as pd
 from fuzzywuzzy import process  # type: ignore
-from pyvi import ViTokenizer
+from pyvi import ViTokenizer # type: ignore
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 import pickle
 import mysql.connector
-db=mysql.connector.connect(user='root',password='123456',host='localhost')
+from openpyxl import load_workbook
+
 app=Flask(__name__)
 app.config["SECRET_KEY"]="quanhoangduong"
 # LAPTOP-FF387IJ3\HOANGQUAN
@@ -208,6 +209,35 @@ def save_data():
         return redirect(url_for("index"))
 
 # thêm câu hỏi từ file excel vào CSDL
+# @app.route('/upload_excel', methods=['POST'])
+# def upload_excel():
+#     file = request.files['file']
+#     if file.filename == '':
+#         return 'No selected file'
+
+#     if file:
+#         filename = file.filename
+#         a=request.form["mamonhoc"]
+#         b=request.form["tenmonhoc"]
+#         # Lưu dữ liệu file vào cơ sở dữ liệu
+#         # save_to_database(filename, data)
+#         df = pd.read_excel(file)
+#         conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+#         cursor = conn.cursor()
+#         for index, row in df.iterrows():
+#             if row.iloc[5]=="a" or row.iloc[5]=="A":
+#                 correct=row.iloc[1]
+#             if row.iloc[5]=="b" or row.iloc[5]=="B":
+#                 correct=row.iloc[2]
+#             if row.iloc[5]=="c" or row.iloc[5]=="C":
+#                 correct=row.iloc[3]
+#             if row.iloc[5]=="d" or row.iloc[5]=="D":
+#                 correct=row.iloc[4]
+#             cursor.execute("INSERT INTO `btlweb`.`nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s,%s)",
+#             (a,b,row.iloc[0],row.iloc[1],row.iloc[2],row.iloc[3],row.iloc[4],correct))
+#             conn.commit()    
+#         flash("File đã được tải lên và lưu trữ trong cơ sở dữ liệu thành công!",category="info")
+#         return redirect(url_for("admin"))
 @app.route('/upload_excel', methods=['POST'])
 def upload_excel():
     file = request.files['file']
@@ -215,27 +245,25 @@ def upload_excel():
         return 'No selected file'
 
     if file:
-        filename = file.filename
-        a=request.form["mamonhoc"]
-        b=request.form["tenmonhoc"]
-        # Lưu dữ liệu file vào cơ sở dữ liệu
-        # save_to_database(filename, data)
-        df = pd.read_excel(file)
-        conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+        a = request.form["mamonhoc"]
+        b = request.form["tenmonhoc"]
+        
+        # Mở file Excel
+        wb = load_workbook(file)
+        sheet = wb.active
+        
+        # Kết nối đến cơ sở dữ liệu MySQL
+        conn = mysql.connector.connect(user='root', password='123456', host='localhost', database='btlweb')
         cursor = conn.cursor()
-        for index, row in df.iterrows():
-            if row.iloc[5]=="a" or row.iloc[5]=="A":
-                correct=row.iloc[1]
-            if row.iloc[5]=="b" or row.iloc[5]=="B":
-                correct=row.iloc[2]
-            if row.iloc[5]=="c" or row.iloc[5]=="C":
-                correct=row.iloc[3]
-            if row.iloc[5]=="d" or row.iloc[5]=="D":
-                correct=row.iloc[4]
-            cursor.execute("INSERT INTO `btlweb`.`nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s,%s)",
-            (a,b,row.iloc[0],row.iloc[1],row.iloc[2],row.iloc[3],row.iloc[4],correct))
-            conn.commit()    
-        flash("File đã được tải lên và lưu trữ trong cơ sở dữ liệu thành công!",category="info")
+
+        # Lặp qua từng hàng trong sheet
+        for row in sheet.iter_rows(values_only=True):
+            correct = row[5].lower() if row[5] else None
+            cursor.execute("INSERT INTO `nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                           (a, b, row[0], row[1], row[2], row[3], row[4], correct))
+            conn.commit()
+
+        flash("File đã được tải lên và lưu trữ trong cơ sở dữ liệu thành công!", category="info")
         return redirect(url_for("admin"))
 
 #xử lý đăng ký tại đây
@@ -472,9 +500,9 @@ def JS1():
 
 # phần này dành cho chat bot  
 
-clf = pickle.load(open('web\\Colab\\NB_ChatBot_model.pkl', 'rb'))
-vocabulary_to_load = pickle.load(open('web\\Colab\\vocab.pkl', 'rb'))
-le = pickle.load(open('web\\Colab\\decode_label.pkl', 'rb'))
+clf = pickle.load(open('Colab\\NB_ChatBot_model.pkl', 'rb'))
+vocabulary_to_load = pickle.load(open('Colab\\vocab.pkl', 'rb'))
+le = pickle.load(open('Colab\\decode_label.pkl', 'rb'))
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot_response():
@@ -484,14 +512,24 @@ def chatbot_response():
     return ok
 
 
+# def tienxuly(document):
+#     document = ViTokenizer.tokenize(document)
+#     # đưa về lower
+#     document = document.lower()
+#     # xóa các ký tự không cần thiết
+#     document = re.sub(r'[^\s\wáàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệóòỏõọôốồổỗộơớờởỡợíìỉĩịúùủũụưứừửữựýỳỷỹỵđ_]',' ',document)
+#     # xóa khoảng trắng thừa
+#     document = re.sub(r'\s+', ' ', document).strip()
+#     return document
 def tienxuly(document):
-    document = ViTokenizer.tokenize(document)
-    # đưa về lower
-    document = document.lower()
-    # xóa các ký tự không cần thiết
-    document = re.sub(r'[^\s\wáàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệóòỏõọôốồổỗộơớờởỡợíìỉĩịúùủũụưứừửữựýỳỷỹỵđ_]',' ',document)
-    # xóa khoảng trắng thừa
-    document = re.sub(r'\s+', ' ', document).strip()
+    # Tách từ bằng biểu thức chính quy
+    document = re.findall(r'\b\w+\b', document)
+    # Đưa về lower
+    document = [word.lower() for word in document]
+    # Loại bỏ các ký tự không mong muốn và dấu câu
+    document = [re.sub(r'[^\w\s]', '', word) for word in document]
+    # Xóa khoảng trắng thừa
+    document = ' '.join(document).strip()
     return document
 
 
