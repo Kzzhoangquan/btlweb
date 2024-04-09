@@ -21,7 +21,7 @@ app.config["SECRET_KEY"]="quanhoangduong"
 # password = '123456'
 # connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
 # conn = pyodbc.connect(connection_string)
-conn=mysql.connector.connect(user='root',password='Xuandat1106',host='127.0.0.1')
+conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
 questions = []
@@ -121,7 +121,6 @@ def nhapma():
         else :
             monthi=request.form["monhoc"]
             search_result = search_name_in_database(monthi)
-
             if not search_result:
                 similar_names = search_similar_names(monthi)
                 a=similar_names[0][0]
@@ -501,15 +500,9 @@ def JS1():
 
 # phần này dành cho chat bot  
 
-<<<<<<< HEAD
-clf = pickle.load(open('Colab/NB_ChatBot_model.pkl', 'rb'))
-vocabulary_to_load = pickle.load(open('Colab/vocab.pkl', 'rb'))
-le = pickle.load(open('Colab/decode_label.pkl', 'rb'))
-=======
 clf = pickle.load(open('Colab\\NB_ChatBot_model.pkl', 'rb'))
 vocabulary_to_load = pickle.load(open('Colab\\vocab.pkl', 'rb'))
 le = pickle.load(open('Colab\\decode_label.pkl', 'rb'))
->>>>>>> 2b96b1c5ac75c6bda2485b89cdcccf05b8494d3e
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot_response():
