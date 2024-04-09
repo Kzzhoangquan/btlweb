@@ -251,15 +251,10 @@ def upload_excel():
         # Mở file Excel
         wb = load_workbook(file)
         sheet = wb.active
-        
-        # Kết nối đến cơ sở dữ liệu MySQL
-        conn = mysql.connector.connect(user='root', password='123456', host='localhost', database='btlweb')
-        cursor = conn.cursor()
-
         # Lặp qua từng hàng trong sheet
         for row in sheet.iter_rows(values_only=True):
             correct = row[5].lower() if row[5] else None
-            cursor.execute("INSERT INTO `nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+            cursor.execute("INSERT INTO `btlweb`.`nganhangcauhoi` (`mamon`, `tenmon`, `question`, `option1`, `option2`, `option3`, `option4`, `correctAnswer`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
                            (a, b, row[0], row[1], row[2], row[3], row[4], correct))
             conn.commit()
 
