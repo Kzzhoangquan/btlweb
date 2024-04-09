@@ -21,13 +21,7 @@
         <link href="static/css/bootstrap-icons.css" rel="stylesheet">
 
         <link href="static/css/main.css" rel="stylesheet">      
-<!--
 
-TemplateMo 590 topic listing
-
-https://templatemo.com/tm-590-topic-listing
-
--->
     </head>
     
     <body id="top">
@@ -140,8 +134,13 @@ https://templatemo.com/tm-590-topic-listing
                                                 <p class="text-white">Thực hành những kiến thức bạn đã tìm hiểu qua những
                                                      câu hỏi trắc nghiệm nhé!</br> Hãy nhập tên môn học bạn muốn làm</p>
                                                 
-                                                <form action="" method="POST">
-                                                    <input type="text" id="course-code" placeholder="Nhập tên môn học" name="monhoc" class="btn custom-btn mt-2 mt-lg-3" >
+                                                <form action="/tracnghiem" method="POST">
+                                                    <select name="monhoc" class="btn custom-btn mt-2 mt-lg-3">
+                                                        <option value="1"> Test 1 </option>
+                                                        <option value="oop"> Lập trình hướng đối tượng </option>
+                                                        <option value="lsd"> Lịch sử Đảng </option>
+
+                                                    </select>
                                                     <button type="submit" class="btn custom-btn mt-2 mt-lg-3" >Xác Nhận</button>
                                                 </form>
                                                 

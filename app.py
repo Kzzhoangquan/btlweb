@@ -25,7 +25,7 @@ conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
 questions = []
-
+list_mon = ["oop", "lsd", "1"]
 
 
 #khoi tao trang web dau tien 
