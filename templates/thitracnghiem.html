@@ -1,18 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- khai báo -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm môn</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/thitracnghiem.css') }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student - Take quiz - Fixed layout</title>
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/thitracnghiem.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
+
 <body>
-  
-        <div id="question-container"></div>
-        <button id="submit-btn">Submit</button>
-        <div id="result"></div>
-        <script src="{{ url_for('static', filename='js/thitracnghiem.js') }}"></script>
-      
-    
+        <nav class="navbar navbar-expand navbar-dark bg-primary m-0">
+            <a href="/home" class="navbar-brand"><i class="material-icons">
+		school</i> WeLearnCode</a>
+            <div class="navbar-spacer"></div>
+        </nav>
+
+        <div class="mdk-drawer-layout js-mdk-drawer-layout flex" data-fullbleed data-push data-has-scrolling-region>
+            <div class="mdk-drawer-layout__content mdk-drawer-layout__content--scrollable">            
+                <div class="container-fluid">
+
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/home">
+						Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Trắc nghiệm</li>
+                    </ol>
+
+                    <!-- kết quả bài kiểm tra -->
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="mb-0" id="socau"><strong></strong></h4>
+                                <small class="text-muted-light">Số câu</small>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="text-success mb-0" id="lamdung"><strong>0</strong></h4>
+                                <small class="text-muted-light">Làm đúng</small>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="text-danger mb-0" id="lamsai"><strong>0</strong></h4>
+                                <small class="text-muted-light">Làm sai</small>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="text-primary mb-0" id="bo"><strong>0</strong></h4>
+                                <small class="text-muted-light">Không làm</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="question-container"></div>
+                            <button id="submit-btn"></button>
+                            <div id="result"></div>
+                            <script src="{{ url_for('static', filename='js/thitracnghiem.js') }}"></script>
+                            
+                            <div class="card-body">
+                                <div class="alert alert-success" role="alert">
+                                    <h3><strong id ="thongbao"></strong></h3> <h2 id="thongbao2"></h2>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/tracnghiem" class="btn btn-white">Quay lại</a>
+                                <a class="btn btn-success float-right" id="nutsubmit">
+                                    <strong>Submit</strong> <i class="material-icons btn__icon--right">send</i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Skip -->
+                        <div class="card-footer">
+                            <a href="/tracnghiem" class="btn btn-white"></a>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/tracnghiem" class="btn btn-white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="mdk-drawer js-mdk-drawer" data-align="end">
+                <div class="mdk-drawer__content">
+                    <div class="sidebar sidebar-right sidebar-light bg-white o-hidden">
+                        <div class="sidebar-p-y" data-simplebar data-simplebar-force-enabled="true">
+                            <div class="sidebar-heading">Thời gian còn lại</div>
+                            <div class="countdown sidebar-p-x" data-value="2" data-unit="hour"></div>
+
+                            <div class="sidebar-heading">Pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- // END Sidebar -->
+        </div>
+
+    <script src="{{ url_for('static', filename='js/countdown.js') }}"></script>
 </body>
 </html>
