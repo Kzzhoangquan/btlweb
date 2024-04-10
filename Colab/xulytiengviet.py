@@ -13,13 +13,13 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score
 
-data = pd.read_excel('C:\\Users\\ADMIN\\Downloads\\chatbotdcsua\\DATACHATBOT.xlsx')
+data = pd.read_excel('data.xlsx')
 X= data["question"]
 Y= data["answer"]
-#print("thuoc tinh dieu kien")
-#print(X)
-#print("thuoc tinh can du doan")
-#print(Y)#
+# print("thuoc tinh dieu kien")
+# print(X)
+# print("thuoc tinh can du doan")
+# print(Y)#
 
 #Tiep theo chung ta se ma hoa Y sao cho no hop ly
 le = preprocessing.LabelEncoder()
@@ -115,7 +115,7 @@ prediction = clf.predict(X_test1)
 
 #bay h se luu file tu vung lai de dung cho sau nay
 
-pickle.dump(vectorizer.vocabulary_, open('C:\\Users\\ADMIN\\Downloads\\chatbotdcsua\\Version3\\Colab\\vocab.pkl', 'wb')) #luu lai
-pickle.dump(clf, open('C:\\Users\\ADMIN\\Downloads\\chatbotdcsua\\Version3\\Colab\\NB_ChatBot_model.pkl', 'wb')) #luu model lai
+pickle.dump(vectorizer.vocabulary_, open('Colab\\vocab.pkl', 'wb')) #luu lai
+pickle.dump(clf, open('Colab\\NB_ChatBot_model.pkl', 'wb')) #luu model lai
 #luu cach ma hoa cua nhan lai
-pickle.dump(le, open('C:\\Users\\ADMIN\\Downloads\\chatbotdcsua\\Version3\\Colab\\decode_label.pkl', 'wb'))
+pickle.dump(le, open('Colab\\decode_label.pkl', 'wb'))
