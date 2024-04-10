@@ -25,14 +25,16 @@ conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
 questions = []
-list_mon = ["oop", "lsd", "1"]
+cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
+res=cursor.fetchall()
+MON_HOC=[str(row[0]) for row in res]
 
 
 #khoi tao trang web dau tien 
 @app.route('/')
 def index():
     session.pop("user", None)
-    return render_template('trangkhoidau.html')
+    return render_template('trangkhoidau.html', list_mon = MON_HOC)
 
 
 # @app.route('/')
@@ -117,7 +119,7 @@ def search_name_in_database(name):
 def nhapma():
     if "user" in session:
         if request.method=="GET":
-            return render_template('tracnghiem.html')
+            return render_template('tracnghiem.html', list_mon = MON_HOC)
         else :
             monthi=request.form["monhoc"]
             search_result = search_name_in_database(monthi)
@@ -126,7 +128,7 @@ def nhapma():
                 a=similar_names[0][0]
 
                 flash(f"Có phải bạn muốn làm bài trắc nghiệm của môn học: '{a}'. Bạn hãy nhập lại tên môn để làm nhé", category="info")
-                return redirect(url_for("nhapma"))
+                return redirect(url_for("nhapma"), list_mon = MON_HOC)
 
             else:
                 questions.clear()
