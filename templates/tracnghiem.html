@@ -104,19 +104,20 @@
 
                         <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                             <div class="custom-block bg-white shadow-lg">
-                                <a href="/tracnghiem">
+    
                                     <div class="d-flex">
                                         <div>
                                             <h5 class="mb-2">Thực hành qua những bài code</h5>
-
-                                            <p class="mb-0">Tính năng đang phát triển...</p>
+                                            <h5 class="mb-2">Bạn có thể code trực tiếp trong các trang lý thuyết</h5>
+                                            
+                                        
                                         </div>
 
                                         <span class="badge bg-design rounded-pill ms-auto">14</span>
                                     </div>
 
                                     <img src="static/images/topics/undraw_Remote_design_team_re_urdx.png" class="custom-block-image img-fluid" alt="">
-                                </a>
+                                
                             </div>
                         </div>
 
@@ -135,18 +136,10 @@
                                                      câu hỏi trắc nghiệm nhé!</br> Hãy nhập tên môn học bạn muốn làm</p>
                                                 
                                                 <form action="/tracnghiem" method="POST">
-                                                    <select name="monhoc" class="btn custom-btn mt-2 mt-lg-3">
-                                                        <option disabled selected value=""> Môn học </option>
-                                                        <!--option value="1"> Test 1 </!--option>
-                                                        <option value="oop"> Lập trình hướng đối tượng </option>
-                                                        <option-- value="lsd"> Lịch sử Đảng </option-->
-                                                        
-                                                        {% for mon in list_mon %}
-                                                            <option>{{ mon }}</option>
-                                                        {% endfor %}
-
-                                                    </select>
-                                                    <button type="submit" class="btn custom-btn mt-2 mt-lg-3" >Xác Nhận</button>
+                                                    <input type="text" id="search-input" placeholder="Nhập tên môn học" name="monhoc" class="btn custom-btn mt-2 mt-lg-3" >
+                                                    <button type="submit" class="btn custom-btn mt-2 mt-lg-3" >Xác Nhận</button></br>
+                                                    <ul id="subject-list"></ul>
+                                                    
                                                 </form>
                                                 
                                             
@@ -275,6 +268,7 @@
         <script src="static/js/jquery.sticky.js"></script>
         <script src="static/js/click-scroll.js"></script>
         <script src="static/js/custom.js"></script>
+        <script src="static/js/monhoc.js"></script>
 
     </body>
 </html>

@@ -25,16 +25,16 @@ conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
 questions = []
-cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
-res=cursor.fetchall()
-MON_HOC=[str(row[0]) for row in res]
+# cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
+# res=cursor.fetchall()
+# MON_HOC=[str(row[0]) for row in res]
 
 
 #khoi tao trang web dau tien 
 @app.route('/')
 def index():
     session.pop("user", None)
-    return render_template('trangkhoidau.html', list_mon = MON_HOC)
+    return render_template('trangkhoidau.html')
 
 
 # @app.route('/')
@@ -94,41 +94,48 @@ def login():
 
 # phần xử lý cho việc người dùng nhập tên môn để làm bai trắc nghiệm
 
-def search_similar_names(name):
-    conn=mysql.connector.connect(user='root',password='123456',host='localhost')
-    cursor = conn.cursor()
-    # Lấy tất cả các tên từ cơ sở dữ liệu
-    cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
-    res=cursor.fetchall()
-    all_names=[str(row[0]) for row in res]
-    # Sử dụng fuzzy matching để tìm các tên gần giống
-    similar_names = process.extract(name, all_names, limit=1)
-    conn.close()
-    return similar_names
+# def search_similar_names(name):
+#     conn=mysql.connector.connect(user='root',password='123456',host='localhost')
+#     cursor = conn.cursor()
+#     # Lấy tất cả các tên từ cơ sở dữ liệu
+#     cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
+#     res=cursor.fetchall()
+#     all_names=[str(row[0]) for row in res]
+#     # Sử dụng fuzzy matching để tìm các tên gần giống
+#     similar_names = process.extract(name, all_names, limit=1)
+#     conn.close()
+#     return similar_names
 
 def search_name_in_database(name):
-    conn=mysql.connector.connect(user='root',password='123456',host='localhost')
-    cursor = conn.cursor()
     # Thực hiện truy vấn SQL để tìm kiếm tên trong cơ sở dữ liệu
     cursor.execute("SELECT * FROM btlweb.nganhangcauhoi WHERE tenmon=%s", (name,))
     result = cursor.fetchall()
-    conn.close()
     return result
 
-@app.route('/tracnghiem',methods=["POST", "GET"])
+def search_subjects(keyword):
+    cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
+    res=cursor.fetchall()
+    subjects=[str(row[0]) for row in res]
+    matched_subjects = [subject for subject in subjects if keyword.lower() in subject.lower()]
+    return matched_subjects
+
+@app.route('/search_subjects')
+def search_subjects_route():
+    keyword = request.args.get('keyword', '').strip()
+    matched_subjects = search_subjects(keyword)
+    return jsonify({'subjects': matched_subjects})
+
+@app.route('/tracnghiem', methods=["POST", "GET"])
 def nhapma():
     if "user" in session:
-        if request.method=="GET":
-            return render_template('tracnghiem.html', list_mon = MON_HOC)
-        else :
+        if request.method == "GET":
+            return render_template('tracnghiem.html')
+        else:
             monthi=request.form["monhoc"]
             search_result = search_name_in_database(monthi)
             if not search_result:
-                similar_names = search_similar_names(monthi)
-                a=similar_names[0][0]
-
-                flash(f"Có phải bạn muốn làm bài trắc nghiệm của môn học: '{a}'. Bạn hãy nhập lại tên môn để làm nhé", category="info")
-                return redirect(url_for("nhapma"), list_mon = MON_HOC)
+                flash(f"Chưa có đề trắc nghiệm cho môn này", category="info")
+                return redirect(url_for("nhapma"))
 
             else:
                 questions.clear()

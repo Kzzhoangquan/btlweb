@@ -1334,3 +1334,22 @@ blockquote {
       opacity: 1;
   }
 }
+
+/* #trắc nghiệm */
+#subject-list {
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+#subject-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#subject-list li:hover {
+  background-color: #f4f4f4;
+}
