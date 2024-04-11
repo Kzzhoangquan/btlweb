@@ -11,9 +11,16 @@ from sklearn.feature_extraction.text import CountVectorizer
 import pickle
 import mysql.connector
 from openpyxl import load_workbook
+from datetime import timedelta
 
 app=Flask(__name__)
+#Config session
 app.config["SECRET_KEY"]="quanhoangduong"
+session.permanent = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+app.config['SESSION_COOKIE_NAME'] = 'Group3WeLearnCodeProject'
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 # LAPTOP-FF387IJ3\HOANGQUAN
 # server = 'LAPTOP-FF387IJ3\HOANGQUAN'
 # database = 'Account'
