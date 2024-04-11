@@ -16,18 +16,11 @@ from datetime import timedelta
 app=Flask(__name__)
 #Config session
 app.config["SECRET_KEY"]="quanhoangduong"
-session.permanent = True
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 app.config['SESSION_COOKIE_NAME'] = 'Group3WeLearnCodeProject'
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
-# LAPTOP-FF387IJ3\HOANGQUAN
-# server = 'LAPTOP-FF387IJ3\HOANGQUAN'
-# database = 'Account'
-# username = 'quan'
-# password = '123456'
-# connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};Trusted_connection=yes;'
-# conn = pyodbc.connect(connection_string)
+
 conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
@@ -42,13 +35,6 @@ questions = []
 def index():
     session.pop("user", None)
     return render_template('trangkhoidau.html')
-
-
-# @app.route('/')
-# def index():
-#     # session.pop("user", None)
-#     return render_template('codejs.html')
-
 
 @app.route('/home')
 def home():
