@@ -136,9 +136,16 @@
                                                      câu hỏi trắc nghiệm nhé!</br> Hãy nhập tên môn học bạn muốn làm</p>
                                                 
                                                 <form action="/tracnghiem" method="POST">
-                                                    <input type="text" id="search-input" placeholder="Nhập tên môn học" name="monhoc" class="btn custom-btn mt-2 mt-lg-3" >
+                                                    <input type="text" id="search-input" placeholder="Nhập tên môn học" name="monhoc" list="items" class="btn custom-btn mt-2 mt-lg-3" >
+                                                    <datalist id="items">
+                                                        
+                                                        {% for mon in list_mon %}
+                                                            <option value={{ mon }}>{{ mon }}</option>
+                                                        {%endfor%}
+                                                    </datalist>
+                                                    
                                                     <button type="submit" class="btn custom-btn mt-2 mt-lg-3" >Xác Nhận</button></br>
-                                                    <ul id="subject-list"></ul>
+                                                    <!--ul id="subject-list"></ul-->
                                                     
                                                 </form>
                                                 
@@ -248,7 +255,7 @@
                         </!--div-->
 
                         <p class="copyright-text mt-lg-5 mt-4">Copyright © Group 3. All rights reserved.
-                        <br><br>Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">Group 3</a></p>
+                        <br><br>Design: <a rel="nofollow" target="_blank">Group 3</a></p>
                         
                     </div>
 

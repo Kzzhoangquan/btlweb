@@ -25,16 +25,16 @@ conn=mysql.connector.connect(user='root',password='123456',host='localhost')
 cursor = conn.cursor()
 
 questions = []
-# cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
-# res=cursor.fetchall()
-# MON_HOC=[str(row[0]) for row in res]
+cursor.execute("SELECT DISTINCT tenmon FROM btlweb.nganhangcauhoi")
+res=cursor.fetchall()
+MON_HOC=[str(row[0]) for row in res]
 
 
 #khoi tao trang web dau tien 
 @app.route('/')
 def index():
     session.pop("user", None)
-    return render_template('trangkhoidau.html')
+    return render_template('trangkhoidau.html', list_mon = MON_HOC)
 
 @app.route('/home')
 def home():
@@ -122,7 +122,7 @@ def search_subjects_route():
 def nhapma():
     if "user" in session:
         if request.method == "GET":
-            return render_template('tracnghiem.html')
+            return render_template('tracnghiem.html', list_mon = MON_HOC)
         else:
             monthi=request.form["monhoc"]
             search_result = search_name_in_database(monthi)
@@ -147,7 +147,7 @@ def nhapma():
 
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
-        return redirect(url_for("index"))
+        return redirect(url_for("index"), list_mon = MON_HOC)
 
 
 #thi trắc nghiệm:
