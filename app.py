@@ -147,7 +147,7 @@ def nhapma():
 
     else:
         flash("Bạn hãy đăng nhập tài khoản",category="info")
-        return redirect(url_for("index"), list_mon = MON_HOC)
+        return redirect(url_for("index"))
 
 
 #thi trắc nghiệm:
